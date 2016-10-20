@@ -3,8 +3,114 @@ module Elements exposing (..)
 import Html exposing (Html)
 import Style exposing (..)
 import Style.Elements exposing (element, elementAs, build)
+import Style.Basic exposing (levitate)
 import Style.Elements.Basic
 import Color
+import Time exposing (second)
+
+
+--------------------
+-- Define Palettes
+--------------------
+
+
+fonts : { normal : Style.Text, title : Style.Text, code : Style.Text }
+fonts =
+    let
+        foundation =
+            { font = "'Noto Sans', Georgia"
+            , size = 18
+            , lineHeight = 1.7
+            , characterOffset = Nothing
+            , align = alignLeft
+            , whitespace = normal
+            }
+    in
+        { normal = foundation
+        , title =
+            { foundation
+                | size = 24
+            }
+        , code =
+            { foundation
+                | whitespace = pre
+                , font = "Inconsolata, Courier"
+                , lineHeight = 1
+            }
+        }
+
+
+{-| Defining all your colors in one place makes fixing color issues a breeze on apps with large style sheets.
+
+-}
+palette :
+    { normal : Style.Colors
+    , link : Style.Colors
+    , blue : Style.Colors
+    , red : Style.Colors
+    , button : Style.Colors
+    , navigation : Style.Colors
+    , navigationHover : Style.Colors
+    , input : Style.Colors
+    , inputFocused : Style.Colors
+    }
+palette =
+    let
+        foundation =
+            { background = Color.rgba 255 255 255 0
+            , text = Color.darkCharcoal
+            , border = Color.rgb 230 230 230
+            }
+
+        blue =
+            Color.rgb 12 148 200
+
+        darkBlue =
+            Color.rgb 7 111 151
+    in
+        { normal = foundation
+        , link =
+            { foundation
+                | text = Color.red
+            }
+        , blue =
+            { background = blue
+            , text = Color.white
+            , border = blue
+            }
+        , red =
+            { background = Color.red
+            , text = Color.white
+            , border = Color.darkGrey
+            }
+        , navigation =
+            { foundation
+                | background = Color.lightGrey
+                , text = Color.lightCharcoal
+            }
+        , navigationHover =
+            { foundation
+                | background = Color.lightGrey
+                , text = Color.red
+            }
+        , button =
+            { foundation
+                | border = darkBlue
+                , background = blue
+                , text = Color.white
+            }
+        , input =
+            { background = Color.grey
+            , text = Color.charcoal
+            , border = Color.lightGrey
+            }
+        , inputFocused =
+            { background = Color.white
+            , text = Color.lightCharcoal
+            , border = Color.lightGrey
+            }
+        }
+
 
 
 --------------------
@@ -15,22 +121,8 @@ import Color
 base : Style.Model
 base =
     { empty
-        | colors =
-            { background = Color.rgba 255 255 255 0
-            , text = Color.rgb 17 17 17
-            , border = Color.rgb 230 230 230
-            }
-        , text =
-            { font = "'Noto Sans', Georgia"
-            , size = 18
-            , lineHeight = 1.7
-            , characterOffset = Nothing
-            , italic = False
-            , boldness = Nothing
-            , align = alignLeft
-            , decoration = Nothing
-            , whitespace = normal
-            }
+        | colors = palette.normal
+        , text = fonts.normal
     }
 
 
@@ -38,27 +130,60 @@ base =
 --------------------
 -- Define Elements
 --------------------
--- container
 
 
-centered : List (Html.Attribute a) -> List (Element a) -> Html a
-centered =
-    let
-        style =
-            Style.Elements.Basic.centered
-    in
-        build { style | padding = topBottom 100 }
+div : List (Html.Attribute a) -> List (Element a) -> Element a
+div =
+    element base
 
 
-pirateContent : List (Html.Attribute a) -> List (Element a) -> Element a
-pirateContent =
+nav : List (Html.Attribute a) -> List (Element a) -> Element a
+nav =
+    elementAs "nav"
+        { base
+            | colors = palette.navigation
+            , text = fonts.normal
+            , width = percent 100
+            , additional = [ ( "min-width", "1000px" ) ]
+            , padding = leftRightAndTopBottom 30 15
+            , relativeTo = screen
+            , anchor = topLeft
+            , position = ( 0, 0 )
+            , additional = [ ( "z-index", "10" ) ]
+            , layout = Style.Basic.split
+        }
+
+
+notice : String -> Element a
+notice str =
+    element
+        base
+        []
+        [ Style.Elements.Basic.text str ]
+
+
+container : List (Html.Attribute a) -> List (Element a) -> Element a
+container =
     element
         { base
-            | width = px 500
+            | padding = topBottom 100
+            , additional = [ ( "min-width", "1000px" ) ]
+            , layout =
+                flowLeft
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = alignTop
+                    }
+        }
+
+
+article : List (Html.Attribute a) -> List (Element a) -> Element a
+article =
+    elementAs "article"
+        { base
+            | width = px 700
             , padding = all 20
             , spacing = all 40
-            , layout =
-                textLayout
         }
 
 
@@ -66,11 +191,9 @@ sidebar : List (Html.Attribute a) -> List (Element a) -> Element a
 sidebar =
     element
         { base
-            | width = px 200
+            | width = px 300
             , padding = all 20
             , spacing = topBottom 40
-            , layout =
-                textLayout
         }
 
 
@@ -80,21 +203,38 @@ p =
         { base | spacing = all 20 }
 
 
-title : List (Html.Attribute a) -> List (Element a) -> Element a
-title =
+link : List (Html.Attribute a) -> List (Element a) -> Element a
+link =
+    elementAs "a"
+        { base
+            | inline =
+                True
+            , colors = palette.link
+        }
+
+
+navlink : List (Html.Attribute a) -> List (Element a) -> Element a
+navlink =
+    elementAs "a"
+        { base
+            | inline = True
+            , padding = left 20
+            , colors = palette.navigation
+            , animations =
+                [ on hover
+                    { variation
+                        | colors = Just palette.navigationHover
+                        , cursor = Just "pointer"
+                    }
+                ]
+        }
+
+
+header : List (Html.Attribute a) -> List (Element a) -> Element a
+header =
     elementAs "h1"
         { base
-            | text =
-                { font = "'Noto Sans', Georgia"
-                , size = 24
-                , lineHeight = 1.4
-                , characterOffset = Nothing
-                , italic = False
-                , boldness = Nothing
-                , align = alignLeft
-                , decoration = Nothing
-                , whitespace = normal
-                }
+            | text = fonts.title
         }
 
 
@@ -105,78 +245,80 @@ box =
             | width = px 180
             , height = px 180
             , padding = all 20
+            , colors = palette.blue
+            , layout =
+                Style.Basic.completelyCentered
+        }
+
+
+smallBox : List (Html.Attribute a) -> List (Element a) -> Element a
+smallBox =
+    element
+        { base
+            | width = px 120
+            , height = px 120
+            , padding = all 20
+            , colors = palette.blue
+            , layout =
+                Style.Basic.completelyCentered
+        }
+
+
+boxVariations : List ( Style.Variation, Bool ) -> List (Html.Attribute a) -> List (Element a) -> Element a
+boxVariations =
+    Style.Elements.optional
+        { base
+            | width = px 120
+            , height = px 120
+            , padding = all 20
+            , colors = palette.blue
+            , layout =
+                Style.Basic.completelyCentered
+        }
+
+
+red : Style.Variation
+red =
+    { variation | colors = Just palette.red }
+
+
+bordered : Style.Variation
+bordered =
+    { variation
+        | borderWidth = Just <| all 5
+        , cornerRadius = Just <| all 15
+    }
+
+
+input : List (Html.Attribute a) -> List (Element a) -> Element a
+input =
+    elementAs "input"
+        { base
+            | width = px 250
+            , padding = leftRightAndTopBottom 10 5
             , colors =
-                { background = Color.blue
-                , text = Color.white
-                , border = Color.rgb 230 230 230
-                }
+                palette.input
+            , borderStyle = solid
+            , borderWidth = all 1
+            , cornerRadius = all 3
+            , animations =
+                [ on focus
+                    { variation
+                        | colors =
+                            Just
+                                { background = Color.white
+                                , text = Color.lightCharcoal
+                                , border = Color.lightGrey
+                                }
+                    }
+                ]
         }
-
-
-floatLeft : List (Html.Attribute a) -> List (Element a) -> Element a
-floatLeft =
-    element
-        { base
-            | float = Just Style.floatLeftTop
-        }
-
-
-floatRight : List (Html.Attribute a) -> List (Element a) -> Element a
-floatRight =
-    element
-        { base
-            | float = Just Style.floatRight
-        }
-
-
-text : String -> Element msg
-text =
-    Style.Elements.Basic.text
-
-
-i : String -> Element msg
-i =
-    Style.Elements.Basic.i
-
-
-b : String -> Element msg
-b =
-    Style.Elements.Basic.b
-
-
-line : Element msg
-line =
-    Style.Elements.Basic.line
-
-
-break : Element msg
-break =
-    Style.Elements.Basic.break
-
-
-dottedList : List (Html.Attribute a) -> List (Element a) -> Element a
-dottedList =
-    Style.Elements.Basic.dottedList
-
-
-numberedList : List (Html.Attribute a) -> List (Element a) -> Element a
-numberedList =
-    Style.Elements.Basic.numberedList
 
 
 
 -------------------
 -- Table Creation
 -------------------
-
-
-{-| -}
-table : List (Html.Attribute msg) -> List (Element msg) -> Element msg
-table =
-    elementAs "table"
-        { empty
-            | layout = Style.tableLayout
-        }
 
 
 {-| -}
@@ -191,11 +333,9 @@ tableHeader =
     elementAs "th"
         { empty
             | padding = all 10
-            , border =
-                { style = solid
-                , width = all 1
-                , corners = all 0
-                }
+            , borderStyle = solid
+            , borderWidth = all 1
+            , cornerRadius = all 0
         }
 
 
@@ -205,15 +345,86 @@ cell =
     elementAs "td"
         { empty
             | padding = all 10
-            , border =
-                { style = solid
-                , width = all 1
-                , corners = all 0
-                }
+            , borderStyle = solid
+            , borderWidth = all 1
+            , cornerRadius = all 0
         }
 
 
 {-| -}
 button : List (Html.Attribute msg) -> List (Element msg) -> Element msg
 button =
-    elementAs "button" empty
+    elementAs "button"
+        { empty
+            | padding = leftRightAndTopBottom 30 15
+            , borderStyle = solid
+            , borderWidth = all 0
+            , cornerRadius = all 2
+            , colors = palette.button
+            , shadows =
+                [ shadow
+                    { offset = ( 0, 2 )
+                    , blur = 5
+                    , size = 0
+                    , color = Color.rgba 0 0 0 0.26
+                    }
+                ]
+            , animations =
+                [ on hover
+                    { levitate
+                        | cursor = Just "pointer"
+                    }
+                ]
+        }
+
+
+rotating : List (Html.Attribute msg) -> List (Element msg) -> Element msg
+rotating =
+    element
+        { empty
+            | colors = palette.button
+            , width = px 50
+            , height = px 50
+            , animations =
+                [ Style.Basic.rotating (5 * second)
+                ]
+        }
+
+
+{-| -}
+subtleLevitate : List (Html.Attribute msg) -> List (Element msg) -> Element msg
+subtleLevitate =
+    element
+        { empty
+            | colors = palette.button
+            , width = px 50
+            , height = px 50
+            , shadows =
+                [ shadow
+                    { offset = ( 0, 2 )
+                    , blur = 5
+                    , size = 0
+                    , color = Color.rgba 0 0 0 0.26
+                    }
+                ]
+            , animations =
+                [ on hover levitate
+                ]
+        }
+
+
+mediaQueryExample : List (Html.Attribute a) -> List (Element a) -> Element a
+mediaQueryExample =
+    element
+        { base
+            | width = px 180
+            , height = px 180
+            , padding = all 20
+            , colors = palette.blue
+            , layout =
+                Style.Basic.completelyCentered
+            , media =
+                [ mediaQuery "screen and ( max-width: 700px )" red
+                , mediaQuery "screen and ( max-width: 600px )" bordered
+                ]
+        }
