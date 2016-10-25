@@ -5,7 +5,7 @@
     "license": "BSD3",
     "source-directories": [
         "src",
-        "../style-blocks/src"
+        "../style-elements/src"
     ],
     "exposed-modules": [],
     "dependencies": {

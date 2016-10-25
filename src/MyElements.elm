@@ -1,12 +1,11 @@
-module Elements exposing (..)
+module MyElements exposing (..)
 
-import Html exposing (Html)
 import Style exposing (..)
 import Style.Elements exposing (element, elementAs, build)
-import Style.Basic exposing (levitate)
-import Style.Elements.Basic
+import Html exposing (Html)
+import Html.Attributes
 import Color
-import Time exposing (second)
+import Time exposing (Time, second)
 
 
 --------------------
@@ -14,7 +13,14 @@ import Time exposing (second)
 --------------------
 
 
-fonts : { normal : Style.Text, title : Style.Text, code : Style.Text }
+type alias MyFonts =
+    { normal : Style.Text
+    , title : Style.Text
+    , code : Style.Text
+    }
+
+
+fonts : MyFonts
 fonts =
     let
         foundation =
@@ -40,20 +46,23 @@ fonts =
         }
 
 
+type alias MyColorPalette =
+    { normal : Style.ColorPalette
+    , link : Style.ColorPalette
+    , blue : Style.ColorPalette
+    , red : Style.ColorPalette
+    , button : Style.ColorPalette
+    , navigation : Style.ColorPalette
+    , navigationHover : Style.ColorPalette
+    , input : Style.ColorPalette
+    , inputFocused : Style.ColorPalette
+    }
+
+
 {-| Defining all your colors in one place makes fixing color issues a breeze on apps with large style sheets.
 
 -}
-palette :
-    { normal : Style.Colors
-    , link : Style.Colors
-    , blue : Style.Colors
-    , red : Style.Colors
-    , button : Style.Colors
-    , navigation : Style.Colors
-    , navigationHover : Style.Colors
-    , input : Style.Colors
-    , inputFocused : Style.Colors
-    }
+palette : MyColorPalette
 palette =
     let
         foundation =
@@ -132,6 +141,13 @@ base =
 --------------------
 
 
+{-| The absolute parent element.  This element will embed a style sheet and convert all elements to html.
+-}
+page : List (Html.Attribute a) -> List (Element a) -> Html a
+page =
+    build base
+
+
 div : List (Html.Attribute a) -> List (Element a) -> Element a
 div =
     element base
@@ -144,13 +160,34 @@ nav =
             | colors = palette.navigation
             , text = fonts.normal
             , width = percent 100
-            , additional = [ ( "min-width", "1000px" ) ]
             , padding = leftRightAndTopBottom 30 15
             , relativeTo = screen
             , anchor = topLeft
             , position = ( 0, 0 )
-            , additional = [ ( "z-index", "10" ) ]
-            , layout = Style.Basic.split
+            , properties = [ ( "z-index", "10" ), ( "min-width", "1000px" ) ]
+            , layout =
+                flowRight
+                    { wrap = False
+                    , horizontal =
+                        justify
+                        -- this makes it so the children elements hug the sides.
+                        -- Perfect for a nav with a right and left section
+                    , vertical = verticalCenter
+                    }
+        }
+
+
+centered : List (Html.Attribute a) -> List (Element a) -> Element a
+centered =
+    element
+        { base
+            | spacing = all 10
+            , layout =
+                flowRight
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = alignTop
+                    }
         }
 
 
@@ -159,7 +196,7 @@ notice str =
     element
         base
         []
-        [ Style.Elements.Basic.text str ]
+        [ text str ]
 
 
 container : List (Html.Attribute a) -> List (Element a) -> Element a
@@ -167,7 +204,7 @@ container =
     element
         { base
             | padding = topBottom 100
-            , additional = [ ( "min-width", "1000px" ) ]
+            , properties = [ ( "min-width", "1000px" ) ]
             , layout =
                 flowLeft
                     { wrap = True
@@ -247,7 +284,11 @@ box =
             , padding = all 20
             , colors = palette.blue
             , layout =
-                Style.Basic.completelyCentered
+                flowRight
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = verticalCenter
+                    }
         }
 
 
@@ -260,7 +301,11 @@ smallBox =
             , padding = all 20
             , colors = palette.blue
             , layout =
-                Style.Basic.completelyCentered
+                flowRight
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = verticalCenter
+                    }
         }
 
 
@@ -273,7 +318,11 @@ boxVariations =
             , padding = all 20
             , colors = palette.blue
             , layout =
-                Style.Basic.completelyCentered
+                flowRight
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = verticalCenter
+                    }
         }
 
 
@@ -316,9 +365,71 @@ input =
 
 
 
+-----------------------------------------
+-- Convenience elements for setting float
+-----------------------------------------
+
+
+{-| Float a single element to the left
+-}
+floatLeft : Element a -> Element a
+floatLeft floater =
+    element
+        { empty
+            | float = Just Style.floatLeft
+        }
+        []
+        [ floater ]
+
+
+{-|
+-}
+floatRight : Element a -> Element a
+floatRight floater =
+    element
+        { empty
+            | float = Just Style.floatRight
+        }
+        []
+        [ floater ]
+
+
+{-| Float a single element to the left.  "topLeft" means it will ignore top spacing that the parent specifies and use 0px insteas.
+-}
+floatTopLeft : Element a -> Element a
+floatTopLeft floater =
+    element
+        { empty
+            | float = Just Style.floatTopLeft
+        }
+        []
+        [ floater ]
+
+
+{-|
+-}
+floatTopRight : Element a -> Element a
+floatTopRight floater =
+    element
+        { empty
+            | float = Just Style.floatTopRight
+        }
+        []
+        [ floater ]
+
+
+
 -------------------
 -- Table Creation
 -------------------
+
+
+table : List (Html.Attribute msg) -> List (Element msg) -> Element msg
+table =
+    elementAs "table"
+        { empty
+            | layout = tableLayout
+        }
 
 
 {-| -}
@@ -378,15 +489,15 @@ button =
         }
 
 
-rotating : List (Html.Attribute msg) -> List (Element msg) -> Element msg
-rotating =
+rotatingBox : List (Html.Attribute msg) -> List (Element msg) -> Element msg
+rotatingBox =
     element
         { empty
             | colors = palette.button
             , width = px 50
             , height = px 50
             , animations =
-                [ Style.Basic.rotating (5 * second)
+                [ rotating (5 * second)
                 ]
         }
 
@@ -422,9 +533,160 @@ mediaQueryExample =
             , padding = all 20
             , colors = palette.blue
             , layout =
-                Style.Basic.completelyCentered
+                flowRight
+                    { wrap = True
+                    , horizontal = alignCenter
+                    , vertical = verticalCenter
+                    }
             , media =
                 [ mediaQuery "screen and ( max-width: 700px )" red
                 , mediaQuery "screen and ( max-width: 600px )" bordered
                 ]
         }
+
+
+
+---------------
+-- Text Markup
+--
+-- These are defined as basic html and not as elements because we want them to be context aware.
+-- Instead of having a unique italics element for everywhere we want italics, we can just have one which will use the fontsize/properties of the elements around it.
+--
+-- The class "inline" means that it will ignore the spacing set for it by the parent.  This is generally desired for inline elements.
+---------------
+
+
+br : Element msg
+br =
+    Style.Elements.html <|
+        Html.br [ Html.Attributes.class "inline" ] []
+
+
+text : String -> Element msg
+text str =
+    Style.Elements.html <| Html.text str
+
+
+{-| Italicize text
+-}
+i : String -> Element msg
+i str =
+    Style.Elements.html <|
+        Html.i
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| Bold text
+-}
+b : String -> Element msg
+b str =
+    Style.Elements.html <|
+        Html.b
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| Strike-through text
+-}
+s : String -> Element msg
+s str =
+    Style.Elements.html <|
+        Html.s
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| Underline text
+-}
+u : String -> Element msg
+u str =
+    Style.Elements.html <|
+        Html.u
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| Underline text
+-}
+sub : String -> Element msg
+sub str =
+    Style.Elements.html <|
+        Html.sub
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| Underline text
+-}
+sup : String -> Element msg
+sup str =
+    Style.Elements.html <|
+        Html.sup
+            [ Html.Attributes.class "inline"
+            ]
+            [ Html.text str ]
+
+
+{-| A dividing line rendered as an 'hr' element
+-}
+divider : Element msg
+divider =
+    Style.Elements.html <|
+        Html.hr
+            [ Html.Attributes.style
+                [ ( "height", "1px" )
+                , ( "border", "none" )
+                , ( "background-color", "#ddd" )
+                ]
+            , Html.Attributes.class "inline"
+            ]
+            []
+
+
+
+-- Animations
+
+
+{-| Rotate an element clockwise, forever.
+ Provide the duration for one revolution.
+-}
+rotating : Time -> Animation
+rotating durationForOneRevolution =
+    Style.animate
+        { duration = durationForOneRevolution
+        , easing = "linear"
+        , repeat = forever
+        , steps =
+            [ ( 0, { variation | transforms = [ rotate 0 0 0 ] } )
+            , ( 100, { variation | transforms = [ rotate 0 0 (2 * pi) ] } )
+            ]
+        }
+
+
+levitate : Variation
+levitate =
+    { variation
+        | shadows =
+            [ shadow
+                { offset = ( 0, 4 )
+                , blur = 5
+                , size = 0
+                , color = Color.rgba 0 0 0 0.26
+                }
+            ]
+        , transforms =
+            [ translate 0 -2 0
+            ]
+    }
+
+
+{-| -}
+forever : Float
+forever =
+    1.0 / 0

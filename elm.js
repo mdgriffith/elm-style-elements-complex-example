@@ -9495,7 +9495,7 @@ var _user$project$Style$variation = {
 		[]),
 	filters: _elm_lang$core$Native_List.fromArray(
 		[]),
-	additional: _elm_lang$core$Native_List.fromArray(
+	properties: _elm_lang$core$Native_List.fromArray(
 		[])
 };
 var _user$project$Style$empty = {
@@ -9531,7 +9531,7 @@ var _user$project$Style$empty = {
 		[]),
 	media: _elm_lang$core$Native_List.fromArray(
 		[]),
-	additional: _elm_lang$core$Native_List.fromArray(
+	properties: _elm_lang$core$Native_List.fromArray(
 		[])
 };
 var _user$project$Style$Model = function (a) {
@@ -9558,7 +9558,7 @@ var _user$project$Style$Model = function (a) {
 																					return function (v) {
 																						return function (w) {
 																							return function (x) {
-																								return {layout: a, visibility: b, relativeTo: c, anchor: d, position: e, cursor: f, width: g, height: h, colors: i, spacing: j, padding: k, text: l, borderStyle: m, borderWidth: n, cornerRadius: o, backgroundImage: p, $float: q, inline: r, shadows: s, transforms: t, filters: u, additional: v, animations: w, media: x};
+																								return {layout: a, visibility: b, relativeTo: c, anchor: d, position: e, cursor: f, width: g, height: h, colors: i, spacing: j, padding: k, text: l, borderStyle: m, borderWidth: n, cornerRadius: o, backgroundImage: p, $float: q, inline: r, shadows: s, transforms: t, filters: u, properties: v, animations: w, media: x};
 																							};
 																						};
 																					};
@@ -9600,7 +9600,7 @@ var _user$project$Style$Variation = function (a) {
 														return function (o) {
 															return function (p) {
 																return function (q) {
-																	return {visibility: a, position: b, cursor: c, width: d, height: e, colors: f, padding: g, spacing: h, text: i, borderStyle: j, borderWidth: k, cornerRadius: l, backgroundImagePosition: m, shadows: n, transforms: o, filters: p, additional: q};
+																	return {visibility: a, position: b, cursor: c, width: d, height: e, colors: f, padding: g, spacing: h, text: i, borderStyle: j, borderWidth: k, cornerRadius: l, backgroundImagePosition: m, shadows: n, transforms: o, filters: p, properties: q};
 																};
 															};
 														};
@@ -9618,7 +9618,7 @@ var _user$project$Style$Variation = function (a) {
 		};
 	};
 };
-var _user$project$Style$Colors = F3(
+var _user$project$Style$ColorPalette = F3(
 	function (a, b, c) {
 		return {background: a, text: b, border: c};
 	});
@@ -10311,7 +10311,7 @@ var _user$project$Style_Elements$renderText = function (text) {
 				}())
 			]));
 };
-var _user$project$Style_Elements$renderColors = function (_p36) {
+var _user$project$Style_Elements$renderColorPalette = function (_p36) {
 	var _p37 = _p36;
 	return _elm_lang$core$Native_List.fromArray(
 		[
@@ -10940,7 +10940,7 @@ var _user$project$Style_Elements$renderVariation = function (style) {
 								},
 								style.borderStyle)
 							]))),
-					A2(_elm_lang$core$Maybe$map, _user$project$Style_Elements$renderColors, style.colors),
+					A2(_elm_lang$core$Maybe$map, _user$project$Style_Elements$renderColorPalette, style.colors),
 					A2(_elm_lang$core$Maybe$map, _user$project$Style_Elements$renderText, style.text),
 					A2(_user$project$Style_Elements$listMaybeMap, _user$project$Style_Elements$renderShadow, style.shadows),
 					A2(_user$project$Style_Elements$listMaybeMap, _user$project$Style_Elements$renderFilters, style.filters),
@@ -10960,7 +10960,7 @@ var _user$project$Style_Elements$renderVariation = function (style) {
 										]))));
 					}
 				}(),
-					A2(_user$project$Style_Elements$listMaybeMap, _elm_lang$core$Basics$identity, style.additional),
+					A2(_user$project$Style_Elements$listMaybeMap, _elm_lang$core$Basics$identity, style.properties),
 					A2(_elm_lang$core$Maybe$map, _user$project$Style_Elements$renderVisibility, style.visibility)
 				])));
 	var styleDefinition = _user$project$Style_Elements$addClassName(
@@ -11225,7 +11225,7 @@ var _user$project$Style_Elements$render = function (style) {
 								}())
 							])),
 						_elm_lang$core$Maybe$Just(
-						_user$project$Style_Elements$renderColors(style.colors)),
+						_user$project$Style_Elements$renderColorPalette(style.colors)),
 						_elm_lang$core$Maybe$Just(
 						_user$project$Style_Elements$renderText(style.text)),
 						A2(_elm_lang$core$Maybe$map, _user$project$Style_Elements$renderBackgroundImage, style.backgroundImage),
@@ -11233,7 +11233,7 @@ var _user$project$Style_Elements$render = function (style) {
 						A2(_user$project$Style_Elements$listMaybeMap, _user$project$Style_Elements$renderShadow, style.shadows),
 						A2(_user$project$Style_Elements$listMaybeMap, _user$project$Style_Elements$renderFilters, style.filters),
 						A2(_user$project$Style_Elements$listMaybeMap, _user$project$Style_Elements$renderTransforms, style.transforms),
-						A2(_user$project$Style_Elements$listMaybeMap, _elm_lang$core$Basics$identity, style.additional),
+						A2(_user$project$Style_Elements$listMaybeMap, _elm_lang$core$Basics$identity, style.properties),
 						A2(_elm_lang$core$List$any, _user$project$Style_Elements$isTransition, style.animations) ? _elm_lang$core$Maybe$Just(_user$project$Style_Elements$cssTransitions) : _elm_lang$core$Maybe$Nothing
 					])));
 		var restrictedTags = function () {
@@ -11413,7 +11413,7 @@ var _user$project$Style_Elements$optionalAs = F5(
 		};
 	});
 var _user$project$Style_Elements$optional = _user$project$Style_Elements$optionalAs('div');
-var _user$project$Style_Elements$elementAs = F4(
+var _user$project$Style_Elements$svgAs = F4(
 	function (node, styleModel, attrs, elements) {
 		var _p123 = _elm_lang$core$List$unzip(elements);
 		var childrenStyles = _p123._0;
@@ -11434,36 +11434,64 @@ var _user$project$Style_Elements$elementAs = F4(
 				A2(
 					_elm_lang$core$List_ops['::'],
 					_elm_lang$svg$Svg_Attributes$class(className),
+					A2(
+						_elm_lang$core$List_ops['::'],
+						A2(
+							_elm_lang$html$Html_Attributes$property,
+							'namespace',
+							_elm_lang$core$Json_Encode$string('http://www.w3.org/2000/svg')),
+						attrs)),
+				children)
+		};
+	});
+var _user$project$Style_Elements$elementAs = F4(
+	function (node, styleModel, attrs, elements) {
+		var _p125 = _elm_lang$core$List$unzip(elements);
+		var childrenStyles = _p125._0;
+		var children = _p125._1;
+		var _p126 = _user$project$Style_Elements$render(styleModel);
+		var className = _p126._0;
+		var styleDef = _p126._1;
+		var allStyles = A2(
+			_elm_lang$core$List_ops['::'],
+			styleDef,
+			_elm_lang$core$List$concat(childrenStyles));
+		return {
+			ctor: '_Tuple2',
+			_0: allStyles,
+			_1: A3(
+				_elm_lang$html$Html$node,
+				node,
+				A2(
+					_elm_lang$core$List_ops['::'],
+					_elm_lang$svg$Svg_Attributes$class(className),
 					attrs),
 				children)
 		};
 	});
 var _user$project$Style_Elements$element = _user$project$Style_Elements$elementAs('div');
-var _user$project$Style_Elements$html = F3(
-	function (node, attrs, elements) {
-		var _p125 = _elm_lang$core$List$unzip(elements);
-		var styles = _p125._0;
-		var children = _p125._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$List$concat(styles),
-			_1: A2(node, attrs, children)
-		};
-	});
+var _user$project$Style_Elements$html = function (node) {
+	return {
+		ctor: '_Tuple2',
+		_0: _elm_lang$core$Native_List.fromArray(
+			[]),
+		_1: node
+	};
+};
 var _user$project$Style_Elements$Permissions = F2(
 	function (a, b) {
 		return {floats: a, inline: b};
 	});
 
-var _user$project$Style_Basic$forever = 1.0 / 0;
-var _user$project$Style_Basic$levitate = _elm_lang$core$Native_Utils.update(
+var _user$project$MyElements$forever = 1.0 / 0;
+var _user$project$MyElements$levitate = _elm_lang$core$Native_Utils.update(
 	_user$project$Style$variation,
 	{
 		shadows: _elm_lang$core$Native_List.fromArray(
 			[
 				_user$project$Style$shadow(
 				{
-					offset: {ctor: '_Tuple2', _0: 0, _1: 5},
+					offset: {ctor: '_Tuple2', _0: 0, _1: 4},
 					blur: 5,
 					size: 0,
 					color: A4(_elm_lang$core$Color$rgba, 0, 0, 0, 0.26)
@@ -11474,271 +11502,178 @@ var _user$project$Style_Basic$levitate = _elm_lang$core$Native_Utils.update(
 				A3(_user$project$Style$translate, 0, -2, 0)
 			])
 	});
-var _user$project$Style_Basic_ops = _user$project$Style_Basic_ops || {};
-_user$project$Style_Basic_ops['=>'] = F2(
-	function (v0, v1) {
-		return {ctor: '_Tuple2', _0: v0, _1: v1};
-	});
-var _user$project$Style_Basic$rotating = function (durationForOneRevolution) {
+var _user$project$MyElements$rotating = function (durationForOneRevolution) {
 	return _user$project$Style$animate(
 		{
 			duration: durationForOneRevolution,
 			easing: 'linear',
-			repeat: _user$project$Style_Basic$forever,
+			repeat: _user$project$MyElements$forever,
 			steps: _elm_lang$core$Native_List.fromArray(
 				[
-					A2(
-					_user$project$Style_Basic_ops['=>'],
-					0,
-					_elm_lang$core$Native_Utils.update(
+					{
+					ctor: '_Tuple2',
+					_0: 0,
+					_1: _elm_lang$core$Native_Utils.update(
 						_user$project$Style$variation,
 						{
 							transforms: _elm_lang$core$Native_List.fromArray(
 								[
 									A3(_user$project$Style$rotate, 0, 0, 0)
 								])
-						})),
-					A2(
-					_user$project$Style_Basic_ops['=>'],
-					100,
-					_elm_lang$core$Native_Utils.update(
+						})
+				},
+					{
+					ctor: '_Tuple2',
+					_0: 100,
+					_1: _elm_lang$core$Native_Utils.update(
 						_user$project$Style$variation,
 						{
 							transforms: _elm_lang$core$Native_List.fromArray(
 								[
 									A3(_user$project$Style$rotate, 0, 0, 2 * _elm_lang$core$Basics$pi)
 								])
-						}))
+						})
+				}
 				])
 		});
 };
-var _user$project$Style_Basic$reverseRotating = function (durationForOneRevolution) {
-	return _user$project$Style$animate(
+var _user$project$MyElements$divider = _user$project$Style_Elements$html(
+	A2(
+		_elm_lang$html$Html$hr,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$style(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'height', _1: '1px'},
+						{ctor: '_Tuple2', _0: 'border', _1: 'none'},
+						{ctor: '_Tuple2', _0: 'background-color', _1: '#ddd'}
+					])),
+				_elm_lang$html$Html_Attributes$class('inline')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[])));
+var _user$project$MyElements$sup = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$sup,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$sub = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$sub,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$u = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$u,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$s = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$s,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$b = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$b,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$i = function (str) {
+	return _user$project$Style_Elements$html(
+		A2(
+			_elm_lang$html$Html$i,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('inline')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(str)
+				])));
+};
+var _user$project$MyElements$text = function (str) {
+	return _user$project$Style_Elements$html(
+		_elm_lang$html$Html$text(str));
+};
+var _user$project$MyElements$br = _user$project$Style_Elements$html(
+	A2(
+		_elm_lang$html$Html$br,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('inline')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[])));
+var _user$project$MyElements$cell = A2(
+	_user$project$Style_Elements$elementAs,
+	'td',
+	_elm_lang$core$Native_Utils.update(
+		_user$project$Style$empty,
 		{
-			duration: durationForOneRevolution,
-			easing: 'linear',
-			repeat: _user$project$Style_Basic$forever,
-			steps: _elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_user$project$Style_Basic_ops['=>'],
-					0,
-					_elm_lang$core$Native_Utils.update(
-						_user$project$Style$variation,
-						{
-							transforms: _elm_lang$core$Native_List.fromArray(
-								[
-									A3(_user$project$Style$rotate, 0, 0, 2 * _elm_lang$core$Basics$pi)
-								])
-						})),
-					A2(
-					_user$project$Style_Basic_ops['=>'],
-					100,
-					_elm_lang$core$Native_Utils.update(
-						_user$project$Style$variation,
-						{
-							transforms: _elm_lang$core$Native_List.fromArray(
-								[
-									A3(_user$project$Style$rotate, 0, 0, 0)
-								])
-						}))
-				])
-		});
-};
-var _user$project$Style_Basic$fontSizes = {standard: 16, h3: 18, h2: 24, h1: 32};
-var _user$project$Style_Basic$split = _user$project$Style$flowRight(
-	{wrap: false, horizontal: _user$project$Style$justify, vertical: _user$project$Style$verticalCenter});
-var _user$project$Style_Basic$completelyCentered = _user$project$Style$flowRight(
-	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter});
-var _user$project$Style_Basic$centered = _user$project$Style$flowRight(
-	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop});
-
-var _user$project$Style_Elements_Basic$numberedList = F2(
-	function (attrs, children) {
-		return A3(
-			_user$project$Style_Elements$html,
-			_elm_lang$html$Html$ol,
-			attrs,
-			A2(
-				_elm_lang$core$List$map,
-				function (child) {
-					return A3(
-						_user$project$Style_Elements$html,
-						_elm_lang$html$Html$li,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('inline')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[child]));
-				},
-				children));
-	});
-var _user$project$Style_Elements_Basic$dottedList = F2(
-	function (attrs, children) {
-		return A3(
-			_user$project$Style_Elements$html,
-			_elm_lang$html$Html$ul,
-			attrs,
-			A2(
-				_elm_lang$core$List$map,
-				function (child) {
-					return A3(
-						_user$project$Style_Elements$html,
-						_elm_lang$html$Html$li,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('inline')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[child]));
-				},
-				children));
-	});
-var _user$project$Style_Elements_Basic$clearfix = A3(
-	_user$project$Style_Elements$html,
-	_elm_lang$html$Html$div,
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_elm_lang$html$Html_Attributes$style(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					{ctor: '_Tuple2', _0: 'visibility', _1: 'hidden'},
-					{ctor: '_Tuple2', _0: 'display', _1: 'block'},
-					{ctor: '_Tuple2', _0: 'content', _1: ''},
-					{ctor: '_Tuple2', _0: 'clear', _1: 'both'},
-					{ctor: '_Tuple2', _0: 'height', _1: '0'}
-				])),
-			_elm_lang$html$Html_Attributes$class('inline')
-		]),
-	_elm_lang$core$Native_List.fromArray(
-		[]));
-var _user$project$Style_Elements_Basic$divider = A3(
-	_user$project$Style_Elements$html,
-	_elm_lang$html$Html$hr,
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_elm_lang$html$Html_Attributes$style(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					{ctor: '_Tuple2', _0: 'height', _1: '1px'},
-					{ctor: '_Tuple2', _0: 'border', _1: 'none'},
-					{ctor: '_Tuple2', _0: 'background-color', _1: '#ddd'}
-				])),
-			_elm_lang$html$Html_Attributes$class('inline')
-		]),
-	_elm_lang$core$Native_List.fromArray(
-		[]));
-var _user$project$Style_Elements_Basic$br = A3(
-	_user$project$Style_Elements$html,
-	_elm_lang$html$Html$br,
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_elm_lang$html$Html_Attributes$class('inline')
-		]),
-	_elm_lang$core$Native_List.fromArray(
-		[]));
-var _user$project$Style_Elements_Basic$text = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		F2(
-			function (_p1, _p0) {
-				return _elm_lang$html$Html$text(str);
-			}),
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[]));
-};
-var _user$project$Style_Elements_Basic$i = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$i,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$b = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$b,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$s = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$s,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$u = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$u,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$sub = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$sub,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$sup = function (str) {
-	return A3(
-		_user$project$Style_Elements$html,
-		_elm_lang$html$Html$sup,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('inline')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Style_Elements_Basic$text(str)
-			]));
-};
-var _user$project$Style_Elements_Basic$div = F2(
-	function (attrs, children) {
-		return A3(_user$project$Style_Elements$html, _elm_lang$html$Html$div, attrs, children);
-	});
-var _user$project$Style_Elements_Basic$table = A2(
+			padding: _user$project$Style$all(10),
+			borderStyle: _user$project$Style$solid,
+			borderWidth: _user$project$Style$all(1),
+			cornerRadius: _user$project$Style$all(0)
+		}));
+var _user$project$MyElements$tableHeader = A2(
+	_user$project$Style_Elements$elementAs,
+	'th',
+	_elm_lang$core$Native_Utils.update(
+		_user$project$Style$empty,
+		{
+			padding: _user$project$Style$all(10),
+			borderStyle: _user$project$Style$solid,
+			borderWidth: _user$project$Style$all(1),
+			cornerRadius: _user$project$Style$all(0)
+		}));
+var _user$project$MyElements$row = A2(_user$project$Style_Elements$elementAs, 'tr', _user$project$Style$empty);
+var _user$project$MyElements$table = A2(
 	_user$project$Style_Elements$elementAs,
 	'table',
 	_elm_lang$core$Native_Utils.update(
 		_user$project$Style$empty,
 		{layout: _user$project$Style$tableLayout}));
-var _user$project$Style_Elements_Basic$floatTopRight = function (floater) {
+var _user$project$MyElements$floatTopRight = function (floater) {
 	return A3(
 		_user$project$Style_Elements$element,
 		_elm_lang$core$Native_Utils.update(
@@ -11751,7 +11686,7 @@ var _user$project$Style_Elements_Basic$floatTopRight = function (floater) {
 		_elm_lang$core$Native_List.fromArray(
 			[floater]));
 };
-var _user$project$Style_Elements_Basic$floatTopLeft = function (floater) {
+var _user$project$MyElements$floatTopLeft = function (floater) {
 	return A3(
 		_user$project$Style_Elements$element,
 		_elm_lang$core$Native_Utils.update(
@@ -11764,7 +11699,7 @@ var _user$project$Style_Elements_Basic$floatTopLeft = function (floater) {
 		_elm_lang$core$Native_List.fromArray(
 			[floater]));
 };
-var _user$project$Style_Elements_Basic$floatRight = function (floater) {
+var _user$project$MyElements$floatRight = function (floater) {
 	return A3(
 		_user$project$Style_Elements$element,
 		_elm_lang$core$Native_Utils.update(
@@ -11777,7 +11712,7 @@ var _user$project$Style_Elements_Basic$floatRight = function (floater) {
 		_elm_lang$core$Native_List.fromArray(
 			[floater]));
 };
-var _user$project$Style_Elements_Basic$floatLeft = function (floater) {
+var _user$project$MyElements$floatLeft = function (floater) {
 	return A3(
 		_user$project$Style_Elements$element,
 		_elm_lang$core$Native_Utils.update(
@@ -11790,55 +11725,7 @@ var _user$project$Style_Elements_Basic$floatLeft = function (floater) {
 		_elm_lang$core$Native_List.fromArray(
 			[floater]));
 };
-var _user$project$Style_Elements_Basic$split = _user$project$Style_Elements$element(
-	_elm_lang$core$Native_Utils.update(
-		_user$project$Style$empty,
-		{
-			spacing: _user$project$Style$all(10),
-			layout: _user$project$Style$flowRight(
-				{wrap: false, horizontal: _user$project$Style$justify, vertical: _user$project$Style$verticalCenter})
-		}));
-var _user$project$Style_Elements_Basic$completelyCentered = _user$project$Style_Elements$element(
-	_elm_lang$core$Native_Utils.update(
-		_user$project$Style$empty,
-		{
-			spacing: _user$project$Style$all(10),
-			layout: _user$project$Style$flowRight(
-				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter})
-		}));
-var _user$project$Style_Elements_Basic$centered = _user$project$Style_Elements$element(
-	_elm_lang$core$Native_Utils.update(
-		_user$project$Style$empty,
-		{
-			spacing: _user$project$Style$all(10),
-			layout: _user$project$Style$flowRight(
-				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop})
-		}));
-
-var _user$project$Elements$cell = A2(
-	_user$project$Style_Elements$elementAs,
-	'td',
-	_elm_lang$core$Native_Utils.update(
-		_user$project$Style$empty,
-		{
-			padding: _user$project$Style$all(10),
-			borderStyle: _user$project$Style$solid,
-			borderWidth: _user$project$Style$all(1),
-			cornerRadius: _user$project$Style$all(0)
-		}));
-var _user$project$Elements$tableHeader = A2(
-	_user$project$Style_Elements$elementAs,
-	'th',
-	_elm_lang$core$Native_Utils.update(
-		_user$project$Style$empty,
-		{
-			padding: _user$project$Style$all(10),
-			borderStyle: _user$project$Style$solid,
-			borderWidth: _user$project$Style$all(1),
-			cornerRadius: _user$project$Style$all(0)
-		}));
-var _user$project$Elements$row = A2(_user$project$Style_Elements$elementAs, 'tr', _user$project$Style$empty);
-var _user$project$Elements$bordered = _elm_lang$core$Native_Utils.update(
+var _user$project$MyElements$bordered = _elm_lang$core$Native_Utils.update(
 	_user$project$Style$variation,
 	{
 		borderWidth: _elm_lang$core$Maybe$Just(
@@ -11846,7 +11733,7 @@ var _user$project$Elements$bordered = _elm_lang$core$Native_Utils.update(
 		cornerRadius: _elm_lang$core$Maybe$Just(
 			_user$project$Style$all(15))
 	});
-var _user$project$Elements$palette = function () {
+var _user$project$MyElements$palette = function () {
 	var darkBlue = A3(_elm_lang$core$Color$rgb, 7, 111, 151);
 	var blue = A3(_elm_lang$core$Color$rgb, 12, 148, 200);
 	var foundation = {
@@ -11874,12 +11761,12 @@ var _user$project$Elements$palette = function () {
 		inputFocused: {background: _elm_lang$core$Color$white, text: _elm_lang$core$Color$lightCharcoal, border: _elm_lang$core$Color$lightGrey}
 	};
 }();
-var _user$project$Elements$red = _elm_lang$core$Native_Utils.update(
+var _user$project$MyElements$red = _elm_lang$core$Native_Utils.update(
 	_user$project$Style$variation,
 	{
-		colors: _elm_lang$core$Maybe$Just(_user$project$Elements$palette.red)
+		colors: _elm_lang$core$Maybe$Just(_user$project$MyElements$palette.red)
 	});
-var _user$project$Elements$button = A2(
+var _user$project$MyElements$button = A2(
 	_user$project$Style_Elements$elementAs,
 	'button',
 	_elm_lang$core$Native_Utils.update(
@@ -11889,7 +11776,7 @@ var _user$project$Elements$button = A2(
 			borderStyle: _user$project$Style$solid,
 			borderWidth: _user$project$Style$all(0),
 			cornerRadius: _user$project$Style$all(2),
-			colors: _user$project$Elements$palette.button,
+			colors: _user$project$MyElements$palette.button,
 			shadows: _elm_lang$core$Native_List.fromArray(
 				[
 					_user$project$Style$shadow(
@@ -11906,29 +11793,29 @@ var _user$project$Elements$button = A2(
 					_user$project$Style$on,
 					_user$project$Style$hover,
 					_elm_lang$core$Native_Utils.update(
-						_user$project$Style_Basic$levitate,
+						_user$project$MyElements$levitate,
 						{
 							cursor: _elm_lang$core$Maybe$Just('pointer')
 						}))
 				])
 		}));
-var _user$project$Elements$rotating = _user$project$Style_Elements$element(
+var _user$project$MyElements$rotatingBox = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
 		_user$project$Style$empty,
 		{
-			colors: _user$project$Elements$palette.button,
+			colors: _user$project$MyElements$palette.button,
 			width: _user$project$Style$px(50),
 			height: _user$project$Style$px(50),
 			animations: _elm_lang$core$Native_List.fromArray(
 				[
-					_user$project$Style_Basic$rotating(5 * _elm_lang$core$Time$second)
+					_user$project$MyElements$rotating(5 * _elm_lang$core$Time$second)
 				])
 		}));
-var _user$project$Elements$subtleLevitate = _user$project$Style_Elements$element(
+var _user$project$MyElements$subtleLevitate = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
 		_user$project$Style$empty,
 		{
-			colors: _user$project$Elements$palette.button,
+			colors: _user$project$MyElements$palette.button,
 			width: _user$project$Style$px(50),
 			height: _user$project$Style$px(50),
 			shadows: _elm_lang$core$Native_List.fromArray(
@@ -11943,10 +11830,10 @@ var _user$project$Elements$subtleLevitate = _user$project$Style_Elements$element
 				]),
 			animations: _elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Style$on, _user$project$Style$hover, _user$project$Style_Basic$levitate)
+					A2(_user$project$Style$on, _user$project$Style$hover, _user$project$MyElements$levitate)
 				])
 		}));
-var _user$project$Elements$fonts = function () {
+var _user$project$MyElements$fonts = function () {
 	var foundation = {font: '\'Noto Sans\', Georgia', size: 18, lineHeight: 1.7, characterOffset: _elm_lang$core$Maybe$Nothing, align: _user$project$Style$alignLeft, whitespace: _user$project$Style$normal};
 	return {
 		normal: foundation,
@@ -11958,74 +11845,83 @@ var _user$project$Elements$fonts = function () {
 			{whitespace: _user$project$Style$pre, font: 'Inconsolata, Courier', lineHeight: 1})
 	};
 }();
-var _user$project$Elements$base = _elm_lang$core$Native_Utils.update(
+var _user$project$MyElements$base = _elm_lang$core$Native_Utils.update(
 	_user$project$Style$empty,
-	{colors: _user$project$Elements$palette.normal, text: _user$project$Elements$fonts.normal});
-var _user$project$Elements$div = _user$project$Style_Elements$element(_user$project$Elements$base);
-var _user$project$Elements$notice = function (str) {
+	{colors: _user$project$MyElements$palette.normal, text: _user$project$MyElements$fonts.normal});
+var _user$project$MyElements$page = _user$project$Style_Elements$build(_user$project$MyElements$base);
+var _user$project$MyElements$div = _user$project$Style_Elements$element(_user$project$MyElements$base);
+var _user$project$MyElements$centered = _user$project$Style_Elements$element(
+	_elm_lang$core$Native_Utils.update(
+		_user$project$MyElements$base,
+		{
+			spacing: _user$project$Style$all(10),
+			layout: _user$project$Style$flowRight(
+				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop})
+		}));
+var _user$project$MyElements$notice = function (str) {
 	return A3(
 		_user$project$Style_Elements$element,
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_user$project$Style_Elements_Basic$text(str)
+				_user$project$MyElements$text(str)
 			]));
 };
-var _user$project$Elements$container = _user$project$Style_Elements$element(
+var _user$project$MyElements$container = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			padding: _user$project$Style$topBottom(100),
-			additional: _elm_lang$core$Native_List.fromArray(
+			properties: _elm_lang$core$Native_List.fromArray(
 				[
 					{ctor: '_Tuple2', _0: 'min-width', _1: '1000px'}
 				]),
 			layout: _user$project$Style$flowLeft(
 				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop})
 		}));
-var _user$project$Elements$article = A2(
+var _user$project$MyElements$article = A2(
 	_user$project$Style_Elements$elementAs,
 	'article',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(700),
 			padding: _user$project$Style$all(20),
 			spacing: _user$project$Style$all(40)
 		}));
-var _user$project$Elements$sidebar = _user$project$Style_Elements$element(
+var _user$project$MyElements$sidebar = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(300),
 			padding: _user$project$Style$all(20),
 			spacing: _user$project$Style$topBottom(40)
 		}));
-var _user$project$Elements$p = A2(
+var _user$project$MyElements$p = A2(
 	_user$project$Style_Elements$elementAs,
 	'p',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			spacing: _user$project$Style$all(20)
 		}));
-var _user$project$Elements$link = A2(
+var _user$project$MyElements$link = A2(
 	_user$project$Style_Elements$elementAs,
 	'a',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
-		{inline: true, colors: _user$project$Elements$palette.link}));
-var _user$project$Elements$navlink = A2(
+		_user$project$MyElements$base,
+		{inline: true, colors: _user$project$MyElements$palette.link}));
+var _user$project$MyElements$navlink = A2(
 	_user$project$Style_Elements$elementAs,
 	'a',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			inline: true,
 			padding: _user$project$Style$left(20),
-			colors: _user$project$Elements$palette.navigation,
+			colors: _user$project$MyElements$palette.navigation,
 			animations: _elm_lang$core$Native_List.fromArray(
 				[
 					A2(
@@ -12034,50 +11930,53 @@ var _user$project$Elements$navlink = A2(
 					_elm_lang$core$Native_Utils.update(
 						_user$project$Style$variation,
 						{
-							colors: _elm_lang$core$Maybe$Just(_user$project$Elements$palette.navigationHover),
+							colors: _elm_lang$core$Maybe$Just(_user$project$MyElements$palette.navigationHover),
 							cursor: _elm_lang$core$Maybe$Just('pointer')
 						}))
 				])
 		}));
-var _user$project$Elements$box = _user$project$Style_Elements$element(
+var _user$project$MyElements$box = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(180),
 			height: _user$project$Style$px(180),
 			padding: _user$project$Style$all(20),
-			colors: _user$project$Elements$palette.blue,
-			layout: _user$project$Style_Basic$completelyCentered
+			colors: _user$project$MyElements$palette.blue,
+			layout: _user$project$Style$flowRight(
+				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter})
 		}));
-var _user$project$Elements$smallBox = _user$project$Style_Elements$element(
+var _user$project$MyElements$smallBox = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(120),
 			height: _user$project$Style$px(120),
 			padding: _user$project$Style$all(20),
-			colors: _user$project$Elements$palette.blue,
-			layout: _user$project$Style_Basic$completelyCentered
+			colors: _user$project$MyElements$palette.blue,
+			layout: _user$project$Style$flowRight(
+				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter})
 		}));
-var _user$project$Elements$boxVariations = _user$project$Style_Elements$optional(
+var _user$project$MyElements$boxVariations = _user$project$Style_Elements$optional(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(120),
 			height: _user$project$Style$px(120),
 			padding: _user$project$Style$all(20),
-			colors: _user$project$Elements$palette.blue,
-			layout: _user$project$Style_Basic$completelyCentered
+			colors: _user$project$MyElements$palette.blue,
+			layout: _user$project$Style$flowRight(
+				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter})
 		}));
-var _user$project$Elements$input = A2(
+var _user$project$MyElements$input = A2(
 	_user$project$Style_Elements$elementAs,
 	'input',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(250),
 			padding: A2(_user$project$Style$leftRightAndTopBottom, 10, 5),
-			colors: _user$project$Elements$palette.input,
+			colors: _user$project$MyElements$palette.input,
 			borderStyle: _user$project$Style$solid,
 			borderWidth: _user$project$Style$all(1),
 			cornerRadius: _user$project$Style$all(3),
@@ -12094,50 +11993,57 @@ var _user$project$Elements$input = A2(
 						}))
 				])
 		}));
-var _user$project$Elements$mediaQueryExample = _user$project$Style_Elements$element(
+var _user$project$MyElements$mediaQueryExample = _user$project$Style_Elements$element(
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
 			width: _user$project$Style$px(180),
 			height: _user$project$Style$px(180),
 			padding: _user$project$Style$all(20),
-			colors: _user$project$Elements$palette.blue,
-			layout: _user$project$Style_Basic$completelyCentered,
+			colors: _user$project$MyElements$palette.blue,
+			layout: _user$project$Style$flowRight(
+				{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter}),
 			media: _elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 700px )', _user$project$Elements$red),
-					A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 600px )', _user$project$Elements$bordered)
+					A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 700px )', _user$project$MyElements$red),
+					A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 600px )', _user$project$MyElements$bordered)
 				])
 		}));
-var _user$project$Elements$nav = A2(
+var _user$project$MyElements$nav = A2(
 	_user$project$Style_Elements$elementAs,
 	'nav',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
+		_user$project$MyElements$base,
 		{
-			colors: _user$project$Elements$palette.navigation,
-			text: _user$project$Elements$fonts.normal,
+			colors: _user$project$MyElements$palette.navigation,
+			text: _user$project$MyElements$fonts.normal,
 			width: _user$project$Style$percent(100),
-			additional: _elm_lang$core$Native_List.fromArray(
-				[
-					{ctor: '_Tuple2', _0: 'min-width', _1: '1000px'}
-				]),
 			padding: A2(_user$project$Style$leftRightAndTopBottom, 30, 15),
 			relativeTo: _user$project$Style$screen,
 			anchor: _user$project$Style$topLeft,
 			position: {ctor: '_Tuple2', _0: 0, _1: 0},
-			additional: _elm_lang$core$Native_List.fromArray(
+			properties: _elm_lang$core$Native_List.fromArray(
 				[
-					{ctor: '_Tuple2', _0: 'z-index', _1: '10'}
+					{ctor: '_Tuple2', _0: 'z-index', _1: '10'},
+					{ctor: '_Tuple2', _0: 'min-width', _1: '1000px'}
 				]),
-			layout: _user$project$Style_Basic$split
+			layout: _user$project$Style$flowRight(
+				{wrap: false, horizontal: _user$project$Style$justify, vertical: _user$project$Style$verticalCenter})
 		}));
-var _user$project$Elements$header = A2(
+var _user$project$MyElements$header = A2(
 	_user$project$Style_Elements$elementAs,
 	'h1',
 	_elm_lang$core$Native_Utils.update(
-		_user$project$Elements$base,
-		{text: _user$project$Elements$fonts.title}));
+		_user$project$MyElements$base,
+		{text: _user$project$MyElements$fonts.title}));
+var _user$project$MyElements$MyFonts = F3(
+	function (a, b, c) {
+		return {normal: a, title: b, code: c};
+	});
+var _user$project$MyElements$MyColorPalette = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {normal: a, link: b, blue: c, red: d, button: e, navigation: f, navigationHover: g, input: h, inputFocused: i};
+	});
 
 var _user$project$Main$update = F2(
 	function (msg, model) {
@@ -12147,38 +12053,37 @@ var _user$project$Main$update = F2(
 	});
 var _user$project$Main$WeDontDoAnythingHere = {ctor: 'WeDontDoAnythingHere'};
 var _user$project$Main$view = function (model) {
-	return A3(
-		_user$project$Style_Elements$build,
-		_user$project$Elements$base,
+	return A2(
+		_user$project$MyElements$page,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
-				_user$project$Elements$nav,
+				_user$project$MyElements$nav,
 				_elm_lang$core$Native_List.fromArray(
 					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_user$project$Elements$div,
+						_user$project$MyElements$div,
 						_elm_lang$core$Native_List.fromArray(
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
-								_user$project$Elements$navlink,
+								_user$project$MyElements$navlink,
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('All Things Pirate')
+										_user$project$MyElements$text('All Things Pirate')
 									]))
 							])),
 						A2(
-						_user$project$Elements$input,
+						_user$project$MyElements$input,
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$html$Html_Attributes$placeholder('Pirate Search'),
@@ -12187,330 +12092,330 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$core$Native_List.fromArray(
 							[])),
 						A2(
-						_user$project$Elements$div,
+						_user$project$MyElements$div,
 						_elm_lang$core$Native_List.fromArray(
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
-								_user$project$Elements$navlink,
+								_user$project$MyElements$navlink,
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Settings')
+										_user$project$MyElements$text('Settings')
 									])),
 								A2(
-								_user$project$Elements$navlink,
+								_user$project$MyElements$navlink,
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Logged in as Smee')
+										_user$project$MyElements$text('Logged in as Smee')
 									]))
 							]))
 					])),
 				A2(
-				_user$project$Elements$container,
+				_user$project$MyElements$container,
 				_elm_lang$core$Native_List.fromArray(
 					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_user$project$Elements$sidebar,
+						_user$project$MyElements$sidebar,
 						_elm_lang$core$Native_List.fromArray(
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Sidebar')
+										_user$project$MyElements$text('Sidebar')
 									])),
-								_user$project$Style_Elements_Basic$text('Yar, this website does nothin, except to show what pirate\'s care about most'),
-								_user$project$Style_Elements_Basic$br,
-								_user$project$Style_Elements_Basic$br,
-								_user$project$Style_Elements_Basic$s('which be booty'),
-								_user$project$Style_Elements_Basic$br,
-								_user$project$Style_Elements_Basic$text('which be CSS and elm')
+								_user$project$MyElements$text('Yar, this website does nothin, except to show what pirate\'s care about most'),
+								_user$project$MyElements$br,
+								_user$project$MyElements$br,
+								_user$project$MyElements$s('which be booty'),
+								_user$project$MyElements$br,
+								_user$project$MyElements$text('which be CSS and elm')
 							])),
 						A2(
-						_user$project$Elements$article,
+						_user$project$MyElements$article,
 						_elm_lang$core$Native_List.fromArray(
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Yar')
+										_user$project$MyElements$text('Yar')
 									])),
 								A2(
-								_user$project$Elements$p,
+								_user$project$MyElements$p,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. '),
-										_user$project$Style_Elements_Basic$b('Pinnace holystone mizzenmast'),
-										_user$project$Style_Elements_Basic$text(' quarter crow\'s nest nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey '),
-										_user$project$Style_Elements_Basic$i('doubloon starboard grog black jack gangway rutters.')
+										_user$project$MyElements$text('Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. '),
+										_user$project$MyElements$b('Pinnace holystone mizzenmast'),
+										_user$project$MyElements$text(' quarter crow\'s nest nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey '),
+										_user$project$MyElements$i('doubloon starboard grog black jack gangway rutters.')
 									])),
 								A2(
-								_user$project$Elements$p,
+								_user$project$MyElements$p,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$floatTopLeft(
+										_user$project$MyElements$floatTopLeft(
 										A2(
-											_user$project$Elements$box,
+											_user$project$MyElements$box,
 											_elm_lang$core$Native_List.fromArray(
 												[]),
 											_elm_lang$core$Native_List.fromArray(
 												[
-													_user$project$Style_Elements_Basic$text('We be afloat on the port side!')
+													_user$project$MyElements$text('We be afloat on the port side!')
 												]))),
-										_user$project$Style_Elements_Basic$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.'),
-										_user$project$Style_Elements_Basic$floatRight(
+										_user$project$MyElements$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.'),
+										_user$project$MyElements$floatRight(
 										A2(
-											_user$project$Elements$box,
+											_user$project$MyElements$box,
 											_elm_lang$core$Native_List.fromArray(
 												[]),
 											_elm_lang$core$Native_List.fromArray(
 												[
-													_user$project$Style_Elements_Basic$text('We be a-starboard now!')
+													_user$project$MyElements$text('We be a-starboard now!')
 												]))),
-										_user$project$Style_Elements_Basic$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. '),
+										_user$project$MyElements$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. '),
 										A2(
-										_user$project$Elements$link,
+										_user$project$MyElements$link,
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$href('http://wise-manatee.com')
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('Scallywag dance')
+												_user$project$MyElements$text('Scallywag dance')
 											])),
-										_user$project$Style_Elements_Basic$text(' upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. '),
-										_user$project$Style_Elements_Basic$text('Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.')
+										_user$project$MyElements$text(' upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. '),
+										_user$project$MyElements$text('Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.')
 									])),
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('A Table of My Favorite Pirates')
+										_user$project$MyElements$text('A Table of My Favorite Pirates')
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$table,
+								_user$project$MyElements$table,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A2(
-										_user$project$Elements$row,
+										_user$project$MyElements$row,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Elements$tableHeader,
+												_user$project$MyElements$tableHeader,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('Name')
+														_user$project$MyElements$text('Name')
 													])),
 												A2(
-												_user$project$Elements$tableHeader,
+												_user$project$MyElements$tableHeader,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('Reason why favorite')
+														_user$project$MyElements$text('Reason why favorite')
 													]))
 											])),
 										A2(
-										_user$project$Elements$row,
+										_user$project$MyElements$row,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('Metalbeard')
+														_user$project$MyElements$text('Metalbeard')
 													])),
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('beard')
+														_user$project$MyElements$text('beard')
 													]))
 											])),
 										A2(
-										_user$project$Elements$row,
+										_user$project$MyElements$row,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('Blackbeard')
+														_user$project$MyElements$text('Blackbeard')
 													])),
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('beard')
+														_user$project$MyElements$text('beard')
 													]))
 											])),
 										A2(
-										_user$project$Elements$row,
+										_user$project$MyElements$row,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('Redbeard')
+														_user$project$MyElements$text('Redbeard')
 													])),
 												A2(
-												_user$project$Elements$cell,
+												_user$project$MyElements$cell,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
-														_user$project$Style_Elements_Basic$text('sense of humor')
+														_user$project$MyElements$text('sense of humor')
 													]))
 											]))
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$centered,
+								_user$project$MyElements$centered,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A2(
-										_user$project$Elements$button,
+										_user$project$MyElements$button,
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere)
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('Make \'em walk the plank!')
+												_user$project$MyElements$text('Make \'em walk the plank!')
 											]))
 									])),
-								_user$project$Style_Elements_Basic$divider,
+								_user$project$MyElements$divider,
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Let\'s flow some boxes')
+										_user$project$MyElements$text('Let\'s flow some boxes')
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$centered,
+								_user$project$MyElements$centered,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A2(
-										_user$project$Elements$smallBox,
+										_user$project$MyElements$smallBox,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('1')
+												_user$project$MyElements$text('1')
 											])),
 										A2(
-										_user$project$Elements$smallBox,
+										_user$project$MyElements$smallBox,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('2')
+												_user$project$MyElements$text('2')
 											])),
 										A2(
-										_user$project$Elements$smallBox,
+										_user$project$MyElements$smallBox,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('3')
+												_user$project$MyElements$text('3')
 											]))
 									])),
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Now lets do some style variations')
+										_user$project$MyElements$text('Now lets do some style variations')
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$centered,
+								_user$project$MyElements$centered,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A3(
-										_user$project$Elements$boxVariations,
+										_user$project$MyElements$boxVariations,
 										_elm_lang$core$Native_List.fromArray(
 											[
-												{ctor: '_Tuple2', _0: _user$project$Elements$red, _1: false},
-												{ctor: '_Tuple2', _0: _user$project$Elements$bordered, _1: false}
+												{ctor: '_Tuple2', _0: _user$project$MyElements$red, _1: false},
+												{ctor: '_Tuple2', _0: _user$project$MyElements$bordered, _1: false}
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[])),
 										A3(
-										_user$project$Elements$boxVariations,
+										_user$project$MyElements$boxVariations,
 										_elm_lang$core$Native_List.fromArray(
 											[
-												{ctor: '_Tuple2', _0: _user$project$Elements$red, _1: true},
-												{ctor: '_Tuple2', _0: _user$project$Elements$bordered, _1: false}
+												{ctor: '_Tuple2', _0: _user$project$MyElements$red, _1: true},
+												{ctor: '_Tuple2', _0: _user$project$MyElements$bordered, _1: false}
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[])),
 										A3(
-										_user$project$Elements$boxVariations,
+										_user$project$MyElements$boxVariations,
 										_elm_lang$core$Native_List.fromArray(
 											[
-												{ctor: '_Tuple2', _0: _user$project$Elements$red, _1: true},
-												{ctor: '_Tuple2', _0: _user$project$Elements$bordered, _1: true}
+												{ctor: '_Tuple2', _0: _user$project$MyElements$red, _1: true},
+												{ctor: '_Tuple2', _0: _user$project$MyElements$bordered, _1: true}
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[]),
@@ -12518,85 +12423,85 @@ var _user$project$Main$view = function (model) {
 											[]))
 									])),
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('And some animations')
+										_user$project$MyElements$text('And some animations')
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$centered,
+								_user$project$MyElements$centered,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A2(
-										_user$project$Elements$div,
+										_user$project$MyElements$div,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Style_Elements_Basic$centered,
+												_user$project$MyElements$centered,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
 														A2(
-														_user$project$Elements$rotating,
+														_user$project$MyElements$rotatingBox,
 														_elm_lang$core$Native_List.fromArray(
 															[]),
 														_elm_lang$core$Native_List.fromArray(
 															[]))
 													])),
-												_user$project$Style_Elements_Basic$text('rotating')
+												_user$project$MyElements$text('rotating')
 											])),
 										A2(
-										_user$project$Elements$div,
+										_user$project$MyElements$div,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
 												A2(
-												_user$project$Style_Elements_Basic$centered,
+												_user$project$MyElements$centered,
 												_elm_lang$core$Native_List.fromArray(
 													[]),
 												_elm_lang$core$Native_List.fromArray(
 													[
 														A2(
-														_user$project$Elements$subtleLevitate,
+														_user$project$MyElements$subtleLevitate,
 														_elm_lang$core$Native_List.fromArray(
 															[]),
 														_elm_lang$core$Native_List.fromArray(
 															[]))
 													])),
-												_user$project$Style_Elements_Basic$text('subtle levitation'),
-												_user$project$Style_Elements_Basic$br,
-												_user$project$Style_Elements_Basic$text('on hover')
+												_user$project$MyElements$text('subtle levitation'),
+												_user$project$MyElements$br,
+												_user$project$MyElements$text('on hover')
 											]))
 									])),
 								A2(
-								_user$project$Elements$header,
+								_user$project$MyElements$header,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_user$project$Style_Elements_Basic$text('Perhaps a media query?')
+										_user$project$MyElements$text('Perhaps a media query?')
 									])),
 								A2(
-								_user$project$Style_Elements_Basic$centered,
+								_user$project$MyElements$centered,
 								_elm_lang$core$Native_List.fromArray(
 									[]),
 								_elm_lang$core$Native_List.fromArray(
 									[
 										A2(
-										_user$project$Elements$mediaQueryExample,
+										_user$project$MyElements$mediaQueryExample,
 										_elm_lang$core$Native_List.fromArray(
 											[]),
 										_elm_lang$core$Native_List.fromArray(
 											[
-												_user$project$Style_Elements_Basic$text('resize the window to see this change!')
+												_user$project$MyElements$text('resize the window to see this change!')
 											]))
 									]))
 							]))
