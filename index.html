@@ -12100,7 +12100,7 @@ var _user$project$Style_Render$renderColorPalette = function (_p29) {
 		}
 	};
 };
-var _user$project$Style_Render$renderRelativeTo = function (relativeTo) {
+var _user$project$Style_Render$renderPositionBy = function (relativeTo) {
 	var _p33 = relativeTo;
 	switch (_p33.ctor) {
 		case 'Screen':
@@ -12502,7 +12502,7 @@ var _user$project$Style_Render$renderProperty = function (prop) {
 				_user$project$Style_Render$renderFloating(_p49._0));
 		case 'RelProp':
 			return _user$project$Style_Render$Single(
-				_user$project$Style_Render$renderRelativeTo(_p49._0));
+				_user$project$Style_Render$renderPositionBy(_p49._0));
 		case 'PositionProp':
 			return _user$project$Style_Render$Multiple(
 				A2(
@@ -12678,6 +12678,27 @@ var _user$project$Style_Render$renderProperties = function (props) {
 		_elm_lang$core$List$reverse(
 			A2(_elm_community$list_extra$List_Extra$uniqueBy, _user$project$Style_Model$propertyName, props)));
 };
+var _user$project$Style_Render$renderInline = function (_p71) {
+	var _p72 = _p71;
+	var intermediates = _user$project$Style_Render$renderProperties(_p72._0.properties);
+	var _p73 = A2(_user$project$Style_Render$renderIntermediates, 'rendered-inline', intermediates);
+	var tags = _p73._0;
+	var style = _p73._1;
+	var blocks = _p73._2;
+	return style;
+};
+var _user$project$Style_Media$query = F2(
+	function (name, variation) {
+		return {ctor: '_Tuple2', _0: name, _1: variation};
+	});
+var _user$project$Style_Media$phoneOnly = _user$project$Style_Media$query('(max-width: 599px)');
+var _user$project$Style_Media$tabletPortraitUp = _user$project$Style_Media$query('(min-width: 600px)');
+var _user$project$Style_Media$tabletPortraitOnly = _user$project$Style_Media$query('(min-width: 600px) and (max-width: 899px)');
+var _user$project$Style_Media$tabletLandscapeUp = _user$project$Style_Media$query('(min-width: 900px)');
+var _user$project$Style_Media$tabletLandscapeOnly = _user$project$Style_Media$query('(min-width: 900px) and (max-width: 1199px)');
+var _user$project$Style_Media$desktopUp = _user$project$Style_Media$query('(min-width: 1200px)');
+var _user$project$Style_Media$desktopOnly = _user$project$Style_Media$query('(min-width: 1200px) and (max-width: 1799px)');
+var _user$project$Style_Media$bigDesktopUp = _user$project$Style_Media$query('(min-width: 1800px)');
 var _user$project$Style$selection = F2(
 	function (vary, _p0) {
 		var _p1 = _p0;
@@ -12801,10 +12822,6 @@ var _user$project$Style$transition = F2(
 						_1: _p21.properties
 					}
 				}));
-	});
-var _user$project$Style$mediaQuery = F2(
-	function (name, variation) {
-		return {ctor: '_Tuple2', _0: name, _1: variation};
 	});
 var _user$project$Style$sepia = function (x) {
 	return _user$project$Style_Model$Sepia(x);
@@ -13502,41 +13519,36 @@ var _user$project$Style$cursor = F2(
 					}
 				}));
 	});
-var _user$project$Style$isPosition = function (prop) {
-	var _p148 = prop;
-	if (_p148.ctor === 'PositionProp') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var _user$project$Style$relativeTo = F2(
-	function (rel, _p149) {
-		var _p150 = _p149;
-		var _p151 = _p150._0;
+var _user$project$Style$positionBy = F2(
+	function (rel, _p148) {
+		var _p149 = _p148;
+		var _p150 = _p149._0;
 		return _user$project$Style_Model$Model(
 			_elm_lang$core$Native_Utils.update(
-				_p151,
+				_p150,
 				{
 					properties: {
 						ctor: '::',
 						_0: _user$project$Style_Model$RelProp(rel),
-						_1: _p151.properties
+						_1: _p150.properties
 					}
 				}));
 	});
+var _user$project$Style$currentPosition = _user$project$Style_Model$CurrentPosition;
+var _user$project$Style$parent = _user$project$Style_Model$Parent;
+var _user$project$Style$screen = _user$project$Style_Model$Screen;
 var _user$project$Style$visibility = F2(
-	function (vis, _p152) {
-		var _p153 = _p152;
-		var _p154 = _p153._0;
+	function (vis, _p151) {
+		var _p152 = _p151;
+		var _p153 = _p152._0;
 		return _user$project$Style_Model$Model(
 			_elm_lang$core$Native_Utils.update(
-				_p154,
+				_p153,
 				{
 					properties: {
 						ctor: '::',
 						_0: _user$project$Style_Model$VisibilityProp(vis),
-						_1: _p154.properties
+						_1: _p153.properties
 					}
 				}));
 	});
@@ -13547,62 +13559,59 @@ var _user$project$Style$percent = function (x) {
 var _user$project$Style$px = function (x) {
 	return _user$project$Style_Model$Px(x);
 };
-var _user$project$Style$currentPosition = _user$project$Style_Model$CurrentPosition;
-var _user$project$Style$parent = _user$project$Style_Model$Parent;
-var _user$project$Style$screen = _user$project$Style_Model$Screen;
-var _user$project$Style$floatTopRight = function (_p155) {
-	var _p156 = _p155;
-	var _p157 = _p156._0;
+var _user$project$Style$floatTopRight = function (_p154) {
+	var _p155 = _p154;
+	var _p156 = _p155._0;
 	return _user$project$Style_Model$Model(
 		_elm_lang$core$Native_Utils.update(
-			_p157,
+			_p156,
 			{
 				properties: {
 					ctor: '::',
 					_0: _user$project$Style_Model$FloatProp(_user$project$Style_Model$FloatTopRight),
-					_1: _p157.properties
+					_1: _p156.properties
 				}
 			}));
 };
-var _user$project$Style$floatTopLeft = function (_p158) {
-	var _p159 = _p158;
-	var _p160 = _p159._0;
+var _user$project$Style$floatTopLeft = function (_p157) {
+	var _p158 = _p157;
+	var _p159 = _p158._0;
 	return _user$project$Style_Model$Model(
 		_elm_lang$core$Native_Utils.update(
-			_p160,
+			_p159,
 			{
 				properties: {
 					ctor: '::',
 					_0: _user$project$Style_Model$FloatProp(_user$project$Style_Model$FloatTopLeft),
-					_1: _p160.properties
+					_1: _p159.properties
 				}
 			}));
 };
-var _user$project$Style$floatRight = function (_p161) {
-	var _p162 = _p161;
-	var _p163 = _p162._0;
+var _user$project$Style$floatRight = function (_p160) {
+	var _p161 = _p160;
+	var _p162 = _p161._0;
 	return _user$project$Style_Model$Model(
 		_elm_lang$core$Native_Utils.update(
-			_p163,
+			_p162,
 			{
 				properties: {
 					ctor: '::',
 					_0: _user$project$Style_Model$FloatProp(_user$project$Style_Model$FloatRight),
-					_1: _p163.properties
+					_1: _p162.properties
 				}
 			}));
 };
-var _user$project$Style$floatLeft = function (_p164) {
-	var _p165 = _p164;
-	var _p166 = _p165._0;
+var _user$project$Style$floatLeft = function (_p163) {
+	var _p164 = _p163;
+	var _p165 = _p164._0;
 	return _user$project$Style_Model$Model(
 		_elm_lang$core$Native_Utils.update(
-			_p166,
+			_p165,
 			{
 				properties: {
 					ctor: '::',
 					_0: _user$project$Style_Model$FloatProp(_user$project$Style_Model$FloatLeft),
-					_1: _p166.properties
+					_1: _p165.properties
 				}
 			}));
 };
@@ -13617,79 +13626,78 @@ _user$project$Style_ops['=>'] = F2(
 	function (v0, v1) {
 		return {ctor: '_Tuple2', _0: v0, _1: v1};
 	});
-var _user$project$Style$topLeft = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorTop, _user$project$Style_Model$AnchorLeft);
-var _user$project$Style$anchor = F2(
-	function (anc, _p167) {
-		var _p168 = _p167;
-		var _p170 = _p168._0;
-		var positioned = function () {
-			var _p169 = _elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filter,
-					function (prop) {
-						return _user$project$Style$isPosition(prop);
-					},
-					_p170.properties));
-			if (_p169.ctor === 'Nothing') {
-				return A3(_user$project$Style_Model$PositionProp, anc, 0, 0);
-			} else {
-				if (_p169._0.ctor === 'PositionProp') {
-					return A3(_user$project$Style_Model$PositionProp, anc, _p169._0._1, _p169._0._2);
-				} else {
-					return A3(_user$project$Style_Model$PositionProp, _user$project$Style$topLeft, 0, 0);
-				}
-			}
-		}();
+var _user$project$Style$topLeft = F3(
+	function (x, y, _p166) {
+		var _p167 = _p166;
+		var _p168 = _p167._0;
+		var anchor = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorTop, _user$project$Style_Model$AnchorLeft);
 		return _user$project$Style_Model$Model(
 			_elm_lang$core$Native_Utils.update(
-				_p170,
+				_p168,
 				{
-					properties: {ctor: '::', _0: positioned, _1: _p170.properties}
+					properties: {
+						ctor: '::',
+						_0: A3(_user$project$Style_Model$PositionProp, anchor, x, y),
+						_1: _p168.properties
+					}
 				}));
 	});
-var _user$project$Style$position = F2(
-	function (_p172, _p171) {
+var _user$project$Style$topRight = F3(
+	function (x, y, _p169) {
+		var _p170 = _p169;
+		var _p171 = _p170._0;
+		var anchor = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorTop, _user$project$Style_Model$AnchorRight);
+		return _user$project$Style_Model$Model(
+			_elm_lang$core$Native_Utils.update(
+				_p171,
+				{
+					properties: {
+						ctor: '::',
+						_0: A3(_user$project$Style_Model$PositionProp, anchor, x, y),
+						_1: _p171.properties
+					}
+				}));
+	});
+var _user$project$Style$bottomLeft = F3(
+	function (x, y, _p172) {
 		var _p173 = _p172;
-		var _p178 = _p173._1;
-		var _p177 = _p173._0;
-		var _p174 = _p171;
-		var _p176 = _p174._0;
-		var positioned = function () {
-			var _p175 = _elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filter,
-					function (prop) {
-						return _user$project$Style$isPosition(prop);
-					},
-					_p176.properties));
-			if (_p175.ctor === 'Nothing') {
-				return A3(_user$project$Style_Model$PositionProp, _user$project$Style$topLeft, _p177, _p178);
-			} else {
-				if (_p175._0.ctor === 'PositionProp') {
-					return A3(_user$project$Style_Model$PositionProp, _p175._0._0, _p177, _p178);
-				} else {
-					return A3(_user$project$Style_Model$PositionProp, _user$project$Style$topLeft, 0, 0);
-				}
-			}
-		}();
+		var _p174 = _p173._0;
+		var anchor = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorBottom, _user$project$Style_Model$AnchorLeft);
 		return _user$project$Style_Model$Model(
 			_elm_lang$core$Native_Utils.update(
-				_p176,
+				_p174,
 				{
-					properties: {ctor: '::', _0: positioned, _1: _p176.properties}
+					properties: {
+						ctor: '::',
+						_0: A3(_user$project$Style_Model$PositionProp, anchor, x, y),
+						_1: _p174.properties
+					}
 				}));
 	});
-var _user$project$Style$topRight = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorTop, _user$project$Style_Model$AnchorRight);
-var _user$project$Style$bottomLeft = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorBottom, _user$project$Style_Model$AnchorLeft);
-var _user$project$Style$bottomRight = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorBottom, _user$project$Style_Model$AnchorRight);
+var _user$project$Style$bottomRight = F3(
+	function (x, y, _p175) {
+		var _p176 = _p175;
+		var _p177 = _p176._0;
+		var anchor = A2(_user$project$Style_ops['=>'], _user$project$Style_Model$AnchorBottom, _user$project$Style_Model$AnchorRight);
+		return _user$project$Style_Model$Model(
+			_elm_lang$core$Native_Utils.update(
+				_p177,
+				{
+					properties: {
+						ctor: '::',
+						_0: A3(_user$project$Style_Model$PositionProp, anchor, x, y),
+						_1: _p177.properties
+					}
+				}));
+	});
 var _user$project$Style$debug = function (styles) {
-	var _p179 = _elm_lang$core$List$unzip(
+	var _p178 = _elm_lang$core$List$unzip(
 		A2(
 			_elm_community$list_extra$List_Extra$uniqueBy,
 			_elm_lang$core$Tuple$first,
 			A2(_elm_lang$core$List$map, _user$project$Style_Render$render, styles)));
-	var names = _p179._0;
-	var cssStyles = _p179._1;
+	var names = _p178._0;
+	var cssStyles = _p178._1;
 	return {
 		css: A2(
 			_elm_lang$core$Basics_ops['++'],
@@ -13702,7 +13710,7 @@ var _user$project$Style$debug = function (styles) {
 			var cls = _user$project$Style_Render$getName(model);
 			var withPossibleError = function () {
 				if (!A2(_elm_lang$core$List$member, cls, names)) {
-					var _p180 = A2(
+					var _p179 = A2(
 						_elm_lang$core$Debug$log,
 						'style',
 						A2(_elm_lang$core$Basics_ops['++'], cls, ' is not in your stylesheet, so things might look weird.'));
@@ -13716,24 +13724,24 @@ var _user$project$Style$debug = function (styles) {
 		classList: function (models) {
 			var optionNames = A2(
 				_elm_lang$core$List$map,
-				function (_p181) {
-					var _p182 = _p181;
+				function (_p180) {
+					var _p181 = _p180;
 					return {
 						ctor: '_Tuple2',
-						_0: _user$project$Style_Render$getName(_p182._0),
-						_1: _p182._1
+						_0: _user$project$Style_Render$getName(_p181._0),
+						_1: _p181._1
 					};
 				},
 				models);
 			var missing = A2(
 				_elm_lang$core$List$filterMap,
-				function (_p183) {
-					var _p184 = _p183;
-					var _p185 = _p184._0;
-					return (!A2(_elm_lang$core$List$member, _p185, names)) ? _elm_lang$core$Maybe$Just(_p185) : _elm_lang$core$Maybe$Nothing;
+				function (_p182) {
+					var _p183 = _p182;
+					var _p184 = _p183._0;
+					return (!A2(_elm_lang$core$List$member, _p184, names)) ? _elm_lang$core$Maybe$Just(_p184) : _elm_lang$core$Maybe$Nothing;
 				},
 				optionNames);
-			var _p186 = _elm_lang$core$List$isEmpty(missing) ? '' : (_elm_lang$core$Native_Utils.eq(
+			var _p185 = _elm_lang$core$List$isEmpty(missing) ? '' : (_elm_lang$core$Native_Utils.eq(
 				_elm_lang$core$List$length(missing),
 				1) ? A2(
 				_elm_lang$core$Debug$log,
@@ -13766,30 +13774,34 @@ var _user$project$Style$debug = function (styles) {
 		}
 	};
 };
-var _user$project$Style$getFontNames = function (_p187) {
-	var _p188 = _p187;
-	var font = _elm_lang$core$List$head(
-		_elm_lang$core$List$reverse(
-			A2(_elm_lang$core$List$filter, _user$project$Style_Model$isFont, _p188._0.properties)));
-	var _p189 = font;
-	if (_p189.ctor === 'Nothing') {
-		return {ctor: '[]'};
-	} else {
-		if (_p189._0.ctor === 'FontProp') {
+var _user$project$Style$getFontNames = function (_p186) {
+	var _p187 = _p186;
+	var getFonts = function (prop) {
+		var _p188 = prop;
+		if (_p188.ctor === 'FontProp') {
 			return A2(
 				_elm_lang$core$List$map,
-				function (_p190) {
+				function (_p189) {
 					return A3(
 						_elm_community$string_extra$String_Extra$replace,
-						' ',
-						'+',
-						_elm_lang$core$String$trim(_p190));
+						'\'',
+						'',
+						_elm_community$string_extra$String_Extra$unquote(
+							A3(
+								_elm_community$string_extra$String_Extra$replace,
+								' ',
+								'+',
+								_elm_lang$core$String$trim(_p189))));
 				},
-				A2(_elm_lang$core$String$split, ',', _p189._0._0.font));
+				A2(_elm_lang$core$String$split, ',', _p188._0.font));
 		} else {
 			return {ctor: '[]'};
 		}
-	}
+	};
+	return A2(
+		_elm_lang$core$List$concatMap,
+		getFonts,
+		A2(_elm_lang$core$List$filter, _user$project$Style_Model$isFont, _p187._0.properties));
 };
 var _user$project$Style$isWebfont = function (str) {
 	return A2(
@@ -13837,14 +13849,65 @@ var _user$project$Style$isWebfont = function (str) {
 			}
 		});
 };
+var _user$project$Style$debugWith = F2(
+	function (adds, styles) {
+		var rendered = _user$project$Style$debug(styles);
+		var renderAdd = function (add) {
+			var _p190 = add;
+			switch (_p190.ctor) {
+				case 'AutoImportGoogleFonts':
+					return function (family) {
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							'@import url(\'https://fonts.googleapis.com/css?family=',
+							A2(_elm_lang$core$Basics_ops['++'], family, '\');'));
+					}(
+						A2(
+							_elm_lang$core$String$join,
+							'|',
+							A2(
+								_elm_lang$core$List$filter,
+								function (_p191) {
+									return !_user$project$Style$isWebfont(_p191);
+								},
+								A2(
+									_elm_community$list_extra$List_Extra$uniqueBy,
+									_elm_lang$core$Basics$identity,
+									A2(_elm_lang$core$List$concatMap, _user$project$Style$getFontNames, styles)))));
+				case 'Import':
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						'@import ',
+						A2(_elm_lang$core$Basics_ops['++'], _p190._0, ';'));
+				default:
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						'@import url(\'',
+						A2(_elm_lang$core$Basics_ops['++'], _p190._0, '\');'));
+			}
+		};
+		var _p192 = A2(_elm_lang$core$List$map, renderAdd, adds);
+		if (_p192.ctor === '[]') {
+			return rendered;
+		} else {
+			return _elm_lang$core$Native_Utils.update(
+				rendered,
+				{
+					css: A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_elm_lang$core$String$join, '\n', _p192),
+						A2(_elm_lang$core$Basics_ops['++'], '\n\n', rendered.css))
+				});
+		}
+	});
 var _user$project$Style$render = function (styles) {
-	var _p191 = _elm_lang$core$List$unzip(
+	var _p193 = _elm_lang$core$List$unzip(
 		A2(
 			_elm_community$list_extra$List_Extra$uniqueBy,
 			_elm_lang$core$Tuple$first,
 			A2(_elm_lang$core$List$map, _user$project$Style_Render$render, styles)));
-	var names = _p191._0;
-	var cssStyles = _p191._1;
+	var names = _p193._0;
+	var cssStyles = _p193._1;
 	return {
 		css: A2(_elm_lang$core$String$join, '\n', cssStyles),
 		$class: function (model) {
@@ -13858,9 +13921,9 @@ var _user$project$Style$render = function (styles) {
 					' ',
 					A2(
 						_elm_lang$core$List$map,
-						function (_p192) {
+						function (_p194) {
 							return _user$project$Style_Render$getName(
-								_elm_lang$core$Tuple$first(_p192));
+								_elm_lang$core$Tuple$first(_p194));
 						},
 						A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, models))));
 		}
@@ -13870,8 +13933,8 @@ var _user$project$Style$renderWith = F2(
 	function (adds, styles) {
 		var rendered = _user$project$Style$render(styles);
 		var renderAdd = function (add) {
-			var _p193 = add;
-			switch (_p193.ctor) {
+			var _p195 = add;
+			switch (_p195.ctor) {
 				case 'AutoImportGoogleFonts':
 					return function (family) {
 						return A2(
@@ -13884,8 +13947,8 @@ var _user$project$Style$renderWith = F2(
 							'|',
 							A2(
 								_elm_lang$core$List$filter,
-								function (_p194) {
-									return !_user$project$Style$isWebfont(_p194);
+								function (_p196) {
+									return !_user$project$Style$isWebfont(_p196);
 								},
 								A2(
 									_elm_community$list_extra$List_Extra$uniqueBy,
@@ -13895,16 +13958,16 @@ var _user$project$Style$renderWith = F2(
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
 						'@import ',
-						A2(_elm_lang$core$Basics_ops['++'], _p193._0, ';'));
+						A2(_elm_lang$core$Basics_ops['++'], _p195._0, ';'));
 				default:
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
 						'@import url(\'',
-						A2(_elm_lang$core$Basics_ops['++'], _p193._0, '\');'));
+						A2(_elm_lang$core$Basics_ops['++'], _p195._0, '\');'));
 			}
 		};
-		var _p195 = A2(_elm_lang$core$List$map, renderAdd, adds);
-		if (_p195.ctor === '[]') {
+		var _p197 = A2(_elm_lang$core$List$map, renderAdd, adds);
+		if (_p197.ctor === '[]') {
 			return rendered;
 		} else {
 			return _elm_lang$core$Native_Utils.update(
@@ -13912,8 +13975,8 @@ var _user$project$Style$renderWith = F2(
 				{
 					css: A2(
 						_elm_lang$core$Basics_ops['++'],
-						A2(_elm_lang$core$String$join, '\n', _p195),
-						rendered.css)
+						A2(_elm_lang$core$String$join, '\n', _p197),
+						A2(_elm_lang$core$Basics_ops['++'], '\n\n', rendered.css))
 				});
 		}
 	});
@@ -13929,21 +13992,21 @@ var _user$project$Style$embed = function (stylesheet) {
 		});
 };
 var _user$project$Style$selector = F2(
-	function (cls, _p196) {
-		var _p197 = _p196;
-		return _user$project$Style_Model$Model(
-			_elm_lang$core$Native_Utils.update(
-				_p197._0,
-				{
-					selector: _user$project$Style_Model$Exactly(cls)
-				}));
-	});
-var _user$project$Style$class = F2(
 	function (cls, _p198) {
 		var _p199 = _p198;
 		return _user$project$Style_Model$Model(
 			_elm_lang$core$Native_Utils.update(
 				_p199._0,
+				{
+					selector: _user$project$Style_Model$Exactly(cls)
+				}));
+	});
+var _user$project$Style$class = F2(
+	function (cls, _p200) {
+		var _p201 = _p200;
+		return _user$project$Style_Model$Model(
+			_elm_lang$core$Native_Utils.update(
+				_p201._0,
 				{
 					selector: _user$project$Style_Model$Class(cls)
 				}));
@@ -14008,7 +14071,11 @@ var _user$project$Style$foundation = _user$project$Style_Model$Model(
 														}),
 													_1: {
 														ctor: '::',
-														_0: A3(_user$project$Style_Model$PositionProp, _user$project$Style$topLeft, 0, 0),
+														_0: A3(
+															_user$project$Style_Model$PositionProp,
+															{ctor: '_Tuple2', _0: _user$project$Style_Model$AnchorTop, _1: _user$project$Style_Model$AnchorLeft},
+															0,
+															0),
 														_1: {
 															ctor: '::',
 															_0: _user$project$Style_Model$RelProp(_user$project$Style$currentPosition),
@@ -14164,8 +14231,8 @@ var _user$project$Style_Font$FontSize = F2(
 	function (a, b) {
 		return {size: a, lineHeight: b};
 	});
-var _user$project$Elements$forever = 1.0 / 0;
-var _user$project$Elements$levitate = function (model) {
+var _user$project$MyStyles$forever = 1.0 / 0;
+var _user$project$MyStyles$levitate = function (model) {
 	return A2(
 		_user$project$Style$transforms,
 		{
@@ -14188,7 +14255,7 @@ var _user$project$Elements$levitate = function (model) {
 			},
 			model));
 };
-var _user$project$Elements$cell = A2(
+var _user$project$MyStyles$cell = A2(
 	_user$project$Style$borderRadius,
 	_user$project$Style$all(0),
 	A2(
@@ -14201,7 +14268,7 @@ var _user$project$Elements$cell = A2(
 				_user$project$Style$padding,
 				_user$project$Style$all(10),
 				_user$project$Style$empty))));
-var _user$project$Elements$tableHeader = A2(
+var _user$project$MyStyles$tableHeader = A2(
 	_user$project$Style$borderRadius,
 	_user$project$Style$all(0),
 	A2(
@@ -14214,13 +14281,13 @@ var _user$project$Elements$tableHeader = A2(
 				_user$project$Style$padding,
 				_user$project$Style$all(10),
 				_user$project$Style$empty))));
-var _user$project$Elements$row = _user$project$Style$empty;
-var _user$project$Elements$table = _user$project$Style$tableLayout(_user$project$Style$empty);
-var _user$project$Elements$br = A2(
+var _user$project$MyStyles$row = _user$project$Style$empty;
+var _user$project$MyStyles$table = _user$project$Style$tableLayout(_user$project$Style$empty);
+var _user$project$MyStyles$br = A2(
 	_elm_lang$html$Html$br,
 	{ctor: '[]'},
 	{ctor: '[]'});
-var _user$project$Elements$bordered = function (model) {
+var _user$project$MyStyles$bordered = function (model) {
 	return A2(
 		_user$project$Style$borderRadius,
 		_user$project$Style$all(15),
@@ -14229,7 +14296,7 @@ var _user$project$Elements$bordered = function (model) {
 			_user$project$Style$all(5),
 			model));
 };
-var _user$project$Elements$palette = function () {
+var _user$project$MyStyles$palette = function () {
 	var darkBlue = A3(_elm_lang$core$Color$rgb, 7, 111, 151);
 	var white = _elm_lang$core$Color$white;
 	var red = _elm_lang$core$Color$red;
@@ -14252,19 +14319,19 @@ var _user$project$Elements$palette = function () {
 		searchBarFocused: {background: _elm_lang$core$Color$white, text: _elm_lang$core$Color$lightCharcoal, border: _elm_lang$core$Color$lightGrey}
 	};
 }();
-var _user$project$Elements$red = function (model) {
-	return A2(_user$project$Style$colors, _user$project$Elements$palette.red, model);
+var _user$project$MyStyles$red = function (model) {
+	return A2(_user$project$Style$colors, _user$project$MyStyles$palette.red, model);
 };
-var _user$project$Elements$fontPalette = {
+var _user$project$MyStyles$fontPalette = {
 	body: _user$project$Style_Font$create('\'Noto Sans\', Georgia'),
 	code: _user$project$Style_Font$createFrom(
 		{font: 'Inconsolata, Courier', size: 16, lineHeight: 1, letterOffset: _elm_lang$core$Maybe$Nothing, align: _user$project$Style$alignLeft, whitespace: _user$project$Style$normal})
 };
-var _user$project$Elements$base = A2(
+var _user$project$MyStyles$base = A2(
 	_user$project$Style$font,
-	_user$project$Elements$fontPalette.body.normal,
-	A2(_user$project$Style$colors, _user$project$Elements$palette.normal, _user$project$Style$foundation));
-var _user$project$Elements$nav = A2(
+	_user$project$MyStyles$fontPalette.body.normal,
+	A2(_user$project$Style$colors, _user$project$MyStyles$palette.normal, _user$project$Style$foundation));
+var _user$project$MyStyles$nav = A2(
 	_user$project$Style$flowRight,
 	{wrap: false, horizontal: _user$project$Style$justify, vertical: _user$project$Style$verticalCenter},
 	A2(
@@ -14273,23 +14340,21 @@ var _user$project$Elements$nav = A2(
 		A2(
 			_user$project$Style$zIndex,
 			10,
-			A2(
-				_user$project$Style$position,
-				{ctor: '_Tuple2', _0: 0, _1: 0},
+			A3(
+				_user$project$Style$topLeft,
+				0,
+				0,
 				A2(
-					_user$project$Style$anchor,
-					_user$project$Style$topLeft,
+					_user$project$Style$positionBy,
+					_user$project$Style$screen,
 					A2(
-						_user$project$Style$relativeTo,
-						_user$project$Style$screen,
+						_user$project$Style$padding,
+						A2(_user$project$Style$leftRightAndTopBottom, 30, 15),
 						A2(
-							_user$project$Style$padding,
-							A2(_user$project$Style$leftRightAndTopBottom, 30, 15),
-							A2(
-								_user$project$Style$width,
-								_user$project$Style$percent(100),
-								A2(_user$project$Style$colors, _user$project$Elements$palette.navigation, _user$project$Elements$base)))))))));
-var _user$project$Elements$centered = A2(
+							_user$project$Style$width,
+							_user$project$Style$percent(100),
+							A2(_user$project$Style$colors, _user$project$MyStyles$palette.navigation, _user$project$MyStyles$base))))))));
+var _user$project$MyStyles$centered = A2(
 	_user$project$Style$flowRight,
 	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop},
 	A3(
@@ -14299,8 +14364,8 @@ var _user$project$Elements$centered = A2(
 		A2(
 			_user$project$Style$spacing,
 			_user$project$Style$all(10),
-			_user$project$Elements$base)));
-var _user$project$Elements$container = A2(
+			_user$project$MyStyles$base)));
+var _user$project$MyStyles$container = A2(
 	_user$project$Style$flowLeft,
 	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop},
 	A2(
@@ -14309,8 +14374,8 @@ var _user$project$Elements$container = A2(
 		A2(
 			_user$project$Style$padding,
 			_user$project$Style$topBottom(100),
-			_user$project$Elements$base)));
-var _user$project$Elements$article = A2(
+			_user$project$MyStyles$base)));
+var _user$project$MyStyles$article = A2(
 	_user$project$Style$spacing,
 	_user$project$Style$all(40),
 	A2(
@@ -14319,8 +14384,8 @@ var _user$project$Elements$article = A2(
 		A2(
 			_user$project$Style$width,
 			_user$project$Style$px(700),
-			_user$project$Elements$base)));
-var _user$project$Elements$sidebar = A2(
+			_user$project$MyStyles$base)));
+var _user$project$MyStyles$sidebar = A2(
 	_user$project$Style$spacing,
 	_user$project$Style$topBottom(40),
 	A2(
@@ -14329,37 +14394,37 @@ var _user$project$Elements$sidebar = A2(
 		A2(
 			_user$project$Style$width,
 			_user$project$Style$px(300),
-			_user$project$Elements$base)));
-var _user$project$Elements$p = A2(
+			_user$project$MyStyles$base)));
+var _user$project$MyStyles$p = A2(
 	_user$project$Style$spacing,
 	_user$project$Style$all(20),
-	_user$project$Elements$base);
-var _user$project$Elements$link = A2(
+	_user$project$MyStyles$base);
+var _user$project$MyStyles$link = A2(
 	_user$project$Style$cursor,
 	'pointer',
 	_user$project$Style$underline(
-		A2(_user$project$Style$colors, _user$project$Elements$palette.link, _user$project$Elements$base)));
-var _user$project$Elements$navLink = A2(
+		A2(_user$project$Style$colors, _user$project$MyStyles$palette.link, _user$project$MyStyles$base)));
+var _user$project$MyStyles$navLink = A2(
 	_user$project$Style$hover,
 	function (style) {
 		return A2(
 			_user$project$Style$cursor,
 			'pointer',
-			A2(_user$project$Style$colors, _user$project$Elements$palette.navigationHover, style));
+			A2(_user$project$Style$colors, _user$project$MyStyles$palette.navigationHover, style));
 	},
 	A2(
 		_user$project$Style$colors,
-		_user$project$Elements$palette.navigation,
+		_user$project$MyStyles$palette.navigation,
 		A2(
 			_user$project$Style$padding,
 			_user$project$Style$left(20),
-			_user$project$Elements$base)));
-var _user$project$Elements$box = A2(
+			_user$project$MyStyles$base)));
+var _user$project$MyStyles$box = A2(
 	_user$project$Style$flowRight,
 	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter},
 	A2(
 		_user$project$Style$colors,
-		_user$project$Elements$palette.blue,
+		_user$project$MyStyles$palette.blue,
 		A2(
 			_user$project$Style$padding,
 			_user$project$Style$all(20),
@@ -14369,13 +14434,13 @@ var _user$project$Elements$box = A2(
 				A2(
 					_user$project$Style$width,
 					_user$project$Style$px(180),
-					_user$project$Elements$base)))));
-var _user$project$Elements$smallBox = A2(
+					_user$project$MyStyles$base)))));
+var _user$project$MyStyles$smallBox = A2(
 	_user$project$Style$flowRight,
 	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter},
 	A2(
 		_user$project$Style$colors,
-		_user$project$Elements$palette.blue,
+		_user$project$MyStyles$palette.blue,
 		A2(
 			_user$project$Style$padding,
 			_user$project$Style$all(20),
@@ -14385,8 +14450,8 @@ var _user$project$Elements$smallBox = A2(
 				A2(
 					_user$project$Style$width,
 					_user$project$Style$px(120),
-					_user$project$Elements$base)))));
-var _user$project$Elements$searchBar = A2(
+					_user$project$MyStyles$base)))));
+var _user$project$MyStyles$searchBar = A2(
 	_user$project$Style$focus,
 	_user$project$Style$colors(
 		{background: _elm_lang$core$Color$white, text: _elm_lang$core$Color$lightCharcoal, border: _elm_lang$core$Color$lightGrey}),
@@ -14401,21 +14466,21 @@ var _user$project$Elements$searchBar = A2(
 				_user$project$Style$all(1),
 				A2(
 					_user$project$Style$colors,
-					_user$project$Elements$palette.searchBar,
+					_user$project$MyStyles$palette.searchBar,
 					A2(
 						_user$project$Style$padding,
 						A2(_user$project$Style$leftRightAndTopBottom, 10, 5),
 						A2(
 							_user$project$Style$width,
 							_user$project$Style$px(250),
-							_user$project$Elements$base)))))));
-var _user$project$Elements$button = A2(
+							_user$project$MyStyles$base)))))));
+var _user$project$MyStyles$button = A2(
 	_user$project$Style$hover,
 	function (_p0) {
 		return A2(
 			_user$project$Style$cursor,
 			'pointer',
-			_user$project$Elements$levitate(_p0));
+			_user$project$MyStyles$levitate(_p0));
 	},
 	A2(
 		_user$project$Style$shadows,
@@ -14432,7 +14497,7 @@ var _user$project$Elements$button = A2(
 		},
 		A2(
 			_user$project$Style$colors,
-			_user$project$Elements$palette.button,
+			_user$project$MyStyles$palette.button,
 			A2(
 				_user$project$Style$borderRadius,
 				_user$project$Style$all(2),
@@ -14445,13 +14510,13 @@ var _user$project$Elements$button = A2(
 						A2(
 							_user$project$Style$padding,
 							A2(_user$project$Style$leftRightAndTopBottom, 30, 15),
-							_user$project$Elements$base)))))));
-var _user$project$Elements$rotatingBox = A2(
+							_user$project$MyStyles$base)))))));
+var _user$project$MyStyles$rotatingBox = A2(
 	_user$project$Style$animate,
 	{
 		duration: 5 * _elm_lang$core$Time$second,
 		easing: 'linear',
-		repeat: _user$project$Elements$forever,
+		repeat: _user$project$MyStyles$forever,
 		steps: {
 			ctor: '::',
 			_0: {
@@ -14486,10 +14551,10 @@ var _user$project$Elements$rotatingBox = A2(
 		A2(
 			_user$project$Style$width,
 			_user$project$Style$px(50),
-			A2(_user$project$Style$colors, _user$project$Elements$palette.button, _user$project$Elements$base))));
-var _user$project$Elements$subtleLevitate = A2(
+			A2(_user$project$Style$colors, _user$project$MyStyles$palette.button, _user$project$MyStyles$base))));
+var _user$project$MyStyles$subtleLevitate = A2(
 	_user$project$Style$hover,
-	_user$project$Elements$levitate,
+	_user$project$MyStyles$levitate,
 	A2(
 		_user$project$Style$shadows,
 		{
@@ -14509,8 +14574,8 @@ var _user$project$Elements$subtleLevitate = A2(
 			A2(
 				_user$project$Style$width,
 				_user$project$Style$px(50),
-				A2(_user$project$Style$colors, _user$project$Elements$palette.button, _user$project$Elements$base)))));
-var _user$project$Elements$mediaQueryExample = function () {
+				A2(_user$project$Style$colors, _user$project$MyStyles$palette.button, _user$project$MyStyles$base)))));
+var _user$project$MyStyles$mediaQueryExample = function () {
 	var makeBordered = function (model) {
 		return A2(
 			_user$project$Style$borderRadius,
@@ -14521,16 +14586,16 @@ var _user$project$Elements$mediaQueryExample = function () {
 				model));
 	};
 	var paintRed = function (model) {
-		return A2(_user$project$Style$colors, _user$project$Elements$palette.red, model);
+		return A2(_user$project$Style$colors, _user$project$MyStyles$palette.red, model);
 	};
 	return A2(
 		_user$project$Style$media,
 		{
 			ctor: '::',
-			_0: A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 700px )', paintRed),
+			_0: _user$project$Style_Media$phoneOnly(paintRed),
 			_1: {
 				ctor: '::',
-				_0: A2(_user$project$Style$mediaQuery, 'screen and ( max-width: 600px )', makeBordered),
+				_0: _user$project$Style_Media$tabletPortraitOnly(makeBordered),
 				_1: {ctor: '[]'}
 			}
 		},
@@ -14539,7 +14604,7 @@ var _user$project$Elements$mediaQueryExample = function () {
 			{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter},
 			A2(
 				_user$project$Style$colors,
-				_user$project$Elements$palette.blue,
+				_user$project$MyStyles$palette.blue,
 				A2(
 					_user$project$Style$padding,
 					_user$project$Style$all(20),
@@ -14549,27 +14614,28 @@ var _user$project$Elements$mediaQueryExample = function () {
 						A2(
 							_user$project$Style$width,
 							_user$project$Style$px(180),
-							_user$project$Elements$base))))));
+							_user$project$MyStyles$base))))));
 }();
-var _user$project$Elements$hr = _user$project$Style$inline(
+var _user$project$MyStyles$hr = _user$project$Style$inline(
 	A2(
 		_user$project$Style$colors,
-		_user$project$Elements$palette.greyBackground,
+		_user$project$MyStyles$palette.greyBackground,
 		A2(
 			_user$project$Style$width,
 			_user$project$Style$percent(100),
 			A2(
 				_user$project$Style$height,
 				_user$project$Style$px(1),
-				_user$project$Elements$base))));
-var _user$project$Elements$em = _user$project$Style$italicize(
-	_user$project$Style$inline(_user$project$Elements$base));
-var _user$project$Elements$strong = _user$project$Style$bold(
-	_user$project$Style$inline(_user$project$Elements$base));
-var _user$project$Elements$strikeThrough = _user$project$Style$strike(
-	_user$project$Style$inline(_user$project$Elements$base));
-var _user$project$Elements$stylesheet = A2(
-	_user$project$Style$renderWith,
+				_user$project$MyStyles$base))));
+var _user$project$MyStyles$em = _user$project$Style$italicize(
+	_user$project$Style$inline(_user$project$MyStyles$base));
+var _user$project$MyStyles$strong = _user$project$Style$bold(
+	_user$project$Style$inline(_user$project$MyStyles$base));
+var _user$project$MyStyles$strikeThrough = _user$project$Style$strike(
+	_user$project$Style$inline(_user$project$MyStyles$base));
+var _user$project$MyStyles$header = A2(_user$project$Style$font, _user$project$MyStyles$fontPalette.body.huge, _user$project$MyStyles$base);
+var _user$project$MyStyles$stylesheet = A2(
+	_user$project$Style$debugWith,
 	{
 		ctor: '::',
 		_0: _user$project$Style$autoImportGoogleFonts,
@@ -14577,53 +14643,65 @@ var _user$project$Elements$stylesheet = A2(
 	},
 	{
 		ctor: '::',
-		_0: _user$project$Elements$nav,
+		_0: _user$project$MyStyles$base,
 		_1: {
 			ctor: '::',
-			_0: _user$project$Elements$container,
+			_0: _user$project$MyStyles$nav,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Elements$centered,
+				_0: _user$project$MyStyles$container,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Elements$rotatingBox,
+					_0: _user$project$MyStyles$centered,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Elements$subtleLevitate,
+						_0: _user$project$MyStyles$rotatingBox,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Elements$article,
+							_0: _user$project$MyStyles$subtleLevitate,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Elements$link,
+								_0: _user$project$MyStyles$article,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Elements$navLink,
+									_0: _user$project$MyStyles$link,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Elements$smallBox,
+										_0: _user$project$MyStyles$navLink,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Elements$p,
+											_0: _user$project$MyStyles$smallBox,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Elements$searchBar,
+												_0: _user$project$MyStyles$header,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Elements$sidebar,
+													_0: _user$project$MyStyles$p,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Elements$strikeThrough,
+														_0: _user$project$MyStyles$searchBar,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Elements$button,
+															_0: _user$project$MyStyles$sidebar,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Elements$hr,
+																_0: _user$project$MyStyles$strikeThrough,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Elements$mediaQueryExample,
-																	_1: {ctor: '[]'}
+																	_0: _user$project$MyStyles$button,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$MyStyles$hr,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$MyStyles$mediaQueryExample,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$MyStyles$box,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}
 																}
 															}
 														}
@@ -14640,12 +14718,11 @@ var _user$project$Elements$stylesheet = A2(
 			}
 		}
 	});
-var _user$project$Elements$header = A2(_user$project$Style$font, _user$project$Elements$fontPalette.body.huge, _user$project$Elements$base);
-var _user$project$Elements$MyFonts = F2(
+var _user$project$MyStyles$MyFonts = F2(
 	function (a, b) {
 		return {body: a, code: b};
 	});
-var _user$project$Elements$MyColorPalette = function (a) {
+var _user$project$MyStyles$MyColorPalette = function (a) {
 	return function (b) {
 		return function (c) {
 			return function (d) {
@@ -14666,7 +14743,311 @@ var _user$project$Elements$MyColorPalette = function (a) {
 		};
 	};
 };
-var _user$project$Main$_p0 = _user$project$Elements$stylesheet;
+var _user$project$Style_Elements$flowDownStyle = function (flow) {
+	return A2(
+		_user$project$Style$spacing,
+		flow.spacing,
+		A2(
+			_user$project$Style$flowDown,
+			{wrap: flow.wrap, horizontal: flow.horizontal, vertical: flow.vertical},
+			_user$project$Style$empty));
+};
+var _user$project$Style_Elements$flowUpStyle = function (flow) {
+	return A2(
+		_user$project$Style$spacing,
+		flow.spacing,
+		A2(
+			_user$project$Style$flowUp,
+			{wrap: flow.wrap, horizontal: flow.horizontal, vertical: flow.vertical},
+			_user$project$Style$empty));
+};
+var _user$project$Style_Elements$flowLeftStyle = function (flow) {
+	return A2(
+		_user$project$Style$spacing,
+		flow.spacing,
+		A2(
+			_user$project$Style$flowLeft,
+			{wrap: flow.wrap, horizontal: flow.horizontal, vertical: flow.vertical},
+			_user$project$Style$empty));
+};
+var _user$project$Style_Elements$flowRightStyle = function (flow) {
+	return A2(
+		_user$project$Style$spacing,
+		flow.spacing,
+		A2(
+			_user$project$Style$flowRight,
+			{wrap: flow.wrap, horizontal: flow.horizontal, vertical: flow.vertical},
+			_user$project$Style$empty));
+};
+var _user$project$Style_Elements$cellStyle = A3(_user$project$Style$property, 'display', 'table-cell', _user$project$Style$empty);
+var _user$project$Style_Elements$tableHeaderStyle = A3(_user$project$Style$property, 'display', 'table-column', _user$project$Style$empty);
+var _user$project$Style_Elements$columnStyle = A3(_user$project$Style$property, 'display', 'table-column', _user$project$Style$empty);
+var _user$project$Style_Elements$rowStyle = A3(_user$project$Style$property, 'display', 'table-row', _user$project$Style$empty);
+var _user$project$Style_Elements$tableStyle = _user$project$Style$tableLayout(_user$project$Style$empty);
+var _user$project$Style_Elements$splitStyle = A2(
+	_user$project$Style$flowRight,
+	{wrap: false, horizontal: _user$project$Style$justify, vertical: _user$project$Style$verticalCenter},
+	_user$project$Style$empty);
+var _user$project$Style_Elements$completelyCenteredStyle = A2(
+	_user$project$Style$flowRight,
+	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$verticalCenter},
+	_user$project$Style$empty);
+var _user$project$Style_Elements$centeredStyle = A2(
+	_user$project$Style$flowRight,
+	{wrap: true, horizontal: _user$project$Style$alignCenter, vertical: _user$project$Style$alignTop},
+	_user$project$Style$empty);
+var _user$project$Style_Elements$floatTopRight = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('pos'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					_user$project$Style_Render$renderInline(
+						_user$project$Style$floatTopRight(_user$project$Style$empty))),
+				_1: {ctor: '[]'}
+			}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$floatTopLeft = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('pos'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					_user$project$Style_Render$renderInline(
+						_user$project$Style$floatTopLeft(_user$project$Style$empty))),
+				_1: {ctor: '[]'}
+			}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$floatLeft = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('pos'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					_user$project$Style_Render$renderInline(
+						_user$project$Style$floatLeft(_user$project$Style$empty))),
+				_1: {ctor: '[]'}
+			}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$floatRight = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('pos'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					_user$project$Style_Render$renderInline(
+						_user$project$Style$floatRight(_user$project$Style$empty))),
+				_1: {ctor: '[]'}
+			}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$cell = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				_user$project$Style_Render$renderInline(_user$project$Style_Elements$cellStyle)),
+			_1: {ctor: '[]'}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$column = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				_user$project$Style_Render$renderInline(_user$project$Style_Elements$columnStyle)),
+			_1: {ctor: '[]'}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$tableHeader = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				_user$project$Style_Render$renderInline(_user$project$Style_Elements$tableHeaderStyle)),
+			_1: {ctor: '[]'}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$row = function (nodes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				_user$project$Style_Render$renderInline(_user$project$Style_Elements$rowStyle)),
+			_1: {ctor: '[]'}
+		},
+		nodes);
+};
+var _user$project$Style_Elements$table = F2(
+	function (spacing, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							A2(_user$project$Style$spacing, spacing.spacing, _user$project$Style_Elements$tableStyle))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$flowDown = F2(
+	function (flow, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							_user$project$Style_Elements$flowDownStyle(flow))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$flowUp = F2(
+	function (flow, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							_user$project$Style_Elements$flowUpStyle(flow))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$flowLeft = F2(
+	function (flow, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							_user$project$Style_Elements$flowLeftStyle(flow))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$flowRight = F2(
+	function (flow, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							_user$project$Style_Elements$flowRightStyle(flow))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$split = F2(
+	function (spacing, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							A2(_user$project$Style$spacing, spacing.spacing, _user$project$Style_Elements$splitStyle))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$completelyCentered = F2(
+	function (spacing, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							A2(_user$project$Style$spacing, spacing.spacing, _user$project$Style_Elements$completelyCenteredStyle))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$centered = F2(
+	function (spacing, nodes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('pos'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Style_Render$renderInline(
+							A2(_user$project$Style$spacing, spacing.spacing, _user$project$Style_Elements$centeredStyle))),
+					_1: {ctor: '[]'}
+				}
+			},
+			nodes);
+	});
+var _user$project$Style_Elements$Spacing = function (a) {
+	return {spacing: a};
+};
+var _user$project$Style_Elements$SpacedFlow = F4(
+	function (a, b, c, d) {
+		return {wrap: a, horizontal: b, vertical: c, spacing: d};
+	});
+var _user$project$Main$_p0 = _user$project$MyStyles$stylesheet;
 var _user$project$Main$class = _user$project$Main$_p0.$class;
 var _user$project$Main$classList = _user$project$Main$_p0.classList;
 var _user$project$Main$update = F2(
@@ -14682,14 +15063,14 @@ var _user$project$Main$view = function (model) {
 		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: _user$project$Style$embed(_user$project$Elements$stylesheet),
+			_0: _user$project$Style$embed(_user$project$MyStyles$stylesheet),
 			_1: {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$nav,
 					{
 						ctor: '::',
-						_0: _user$project$Main$class(_user$project$Elements$nav),
+						_0: _user$project$Main$class(_user$project$MyStyles$nav),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -14703,7 +15084,7 @@ var _user$project$Main$view = function (model) {
 									_elm_lang$html$Html$a,
 									{
 										ctor: '::',
-										_0: _user$project$Main$class(_user$project$Elements$navLink),
+										_0: _user$project$Main$class(_user$project$MyStyles$navLink),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere),
@@ -14723,7 +15104,7 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html$input,
 								{
 									ctor: '::',
-									_0: _user$project$Main$class(_user$project$Elements$searchBar),
+									_0: _user$project$Main$class(_user$project$MyStyles$searchBar),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Attributes$placeholder('Pirate Search'),
@@ -14738,11 +15119,9 @@ var _user$project$Main$view = function (model) {
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$div,
+									_user$project$Style_Elements$centered,
 									{
-										ctor: '::',
-										_0: _user$project$Main$class(_user$project$Elements$centered),
-										_1: {ctor: '[]'}
+										spacing: _user$project$Style$all(10)
 									},
 									{
 										ctor: '::',
@@ -14750,7 +15129,7 @@ var _user$project$Main$view = function (model) {
 											_elm_lang$html$Html$a,
 											{
 												ctor: '::',
-												_0: _user$project$Main$class(_user$project$Elements$navLink),
+												_0: _user$project$Main$class(_user$project$MyStyles$navLink),
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere),
@@ -14768,7 +15147,7 @@ var _user$project$Main$view = function (model) {
 												_elm_lang$html$Html$a,
 												{
 													ctor: '::',
-													_0: _user$project$Main$class(_user$project$Elements$navLink),
+													_0: _user$project$Main$class(_user$project$MyStyles$navLink),
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere),
@@ -14793,7 +15172,7 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _user$project$Main$class(_user$project$Elements$container),
+							_0: _user$project$Main$class(_user$project$MyStyles$container),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -14802,7 +15181,7 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _user$project$Main$class(_user$project$Elements$sidebar),
+									_0: _user$project$Main$class(_user$project$MyStyles$sidebar),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -14811,7 +15190,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$html$Html$header,
 										{
 											ctor: '::',
-											_0: _user$project$Main$class(_user$project$Elements$header),
+											_0: _user$project$Main$class(_user$project$MyStyles$header),
 											_1: {ctor: '[]'}
 										},
 										{
@@ -14828,7 +15207,7 @@ var _user$project$Main$view = function (model) {
 												_elm_lang$html$Html$s,
 												{
 													ctor: '::',
-													_0: _user$project$Main$class(_user$project$Elements$strikeThrough),
+													_0: _user$project$Main$class(_user$project$MyStyles$strikeThrough),
 													_1: {ctor: '[]'}
 												},
 												{
@@ -14850,7 +15229,7 @@ var _user$project$Main$view = function (model) {
 									_elm_lang$html$Html$article,
 									{
 										ctor: '::',
-										_0: _user$project$Main$class(_user$project$Elements$article),
+										_0: _user$project$Main$class(_user$project$MyStyles$article),
 										_1: {ctor: '[]'}
 									},
 									{
@@ -14859,7 +15238,7 @@ var _user$project$Main$view = function (model) {
 											_elm_lang$html$Html$header,
 											{
 												ctor: '::',
-												_0: _user$project$Main$class(_user$project$Elements$header),
+												_0: _user$project$Main$class(_user$project$MyStyles$header),
 												_1: {ctor: '[]'}
 											},
 											{
@@ -14873,7 +15252,7 @@ var _user$project$Main$view = function (model) {
 												_elm_lang$html$Html$p,
 												{
 													ctor: '::',
-													_0: _user$project$Main$class(_user$project$Elements$p),
+													_0: _user$project$Main$class(_user$project$MyStyles$p),
 													_1: {ctor: '[]'}
 												},
 												{
@@ -14910,143 +15289,255 @@ var _user$project$Main$view = function (model) {
 											_1: {
 												ctor: '::',
 												_0: A2(
-													_elm_lang$html$Html$header,
+													_elm_lang$html$Html$p,
 													{
 														ctor: '::',
-														_0: _user$project$Main$class(_user$project$Elements$header),
+														_0: _user$project$Main$class(_user$project$MyStyles$p),
 														_1: {ctor: '[]'}
 													},
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html$text('A Table of My Favorite Pirates'),
-														_1: {ctor: '[]'}
-													}),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_elm_lang$html$Html$div,
-														{
-															ctor: '::',
-															_0: _user$project$Main$class(_user$project$Elements$centered),
-															_1: {ctor: '[]'}
-														},
-														{
-															ctor: '::',
-															_0: A2(
-																_elm_lang$html$Html$button,
-																{
-																	ctor: '::',
-																	_0: _user$project$Main$class(_user$project$Elements$button),
-																	_1: {
-																		ctor: '::',
-																		_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere),
-																		_1: {ctor: '[]'}
-																	}
-																},
-																{
-																	ctor: '::',
-																	_0: _elm_lang$html$Html$text('Make \'em walk the plank!'),
-																	_1: {ctor: '[]'}
-																}),
-															_1: {ctor: '[]'}
-														}),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_elm_lang$html$Html$hr,
+														_0: _user$project$Style_Elements$floatTopLeft(
 															{
-																ctor: '::',
-																_0: _user$project$Main$class(_user$project$Elements$hr),
-																_1: {ctor: '[]'}
-															},
-															{ctor: '[]'}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_elm_lang$html$Html$header,
-																{
-																	ctor: '::',
-																	_0: _user$project$Main$class(_user$project$Elements$header),
-																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: _elm_lang$html$Html$text('Let\'s flow some boxes'),
-																	_1: {ctor: '[]'}
-																}),
-															_1: {
 																ctor: '::',
 																_0: A2(
 																	_elm_lang$html$Html$div,
 																	{
 																		ctor: '::',
-																		_0: _user$project$Main$class(_user$project$Elements$centered),
+																		_0: _user$project$Main$class(_user$project$MyStyles$box),
 																		_1: {ctor: '[]'}
 																	},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text('We be afloat on the port side!'),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.'),
+															_1: {
+																ctor: '::',
+																_0: _user$project$Style_Elements$floatRight(
 																	{
 																		ctor: '::',
 																		_0: A2(
 																			_elm_lang$html$Html$div,
 																			{
 																				ctor: '::',
-																				_0: _user$project$Main$class(_user$project$Elements$smallBox),
+																				_0: _user$project$Main$class(_user$project$MyStyles$box),
 																				_1: {ctor: '[]'}
 																			},
 																			{
 																				ctor: '::',
-																				_0: _elm_lang$html$Html$text('1'),
+																				_0: _elm_lang$html$Html$text('We be a-starboard now!'),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text('Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. '),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$a,
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$href('http://wise-manatee.com'),
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html$text('Scallywag dance'),
 																				_1: {ctor: '[]'}
 																			}),
 																		_1: {
 																			ctor: '::',
-																			_0: A2(
-																				_elm_lang$html$Html$div,
-																				{
-																					ctor: '::',
-																					_0: _user$project$Main$class(_user$project$Elements$smallBox),
-																					_1: {ctor: '[]'}
-																				},
-																				{
-																					ctor: '::',
-																					_0: _elm_lang$html$Html$text('2'),
-																					_1: {ctor: '[]'}
-																				}),
+																			_0: _elm_lang$html$Html$text(' upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. '),
 																			_1: {
 																				ctor: '::',
-																				_0: A2(
-																					_elm_lang$html$Html$div,
-																					{
-																						ctor: '::',
-																						_0: _user$project$Main$class(_user$project$Elements$smallBox),
-																						_1: {ctor: '[]'}
-																					},
-																					{
-																						ctor: '::',
-																						_0: _elm_lang$html$Html$text('3'),
-																						_1: {ctor: '[]'}
-																					}),
+																				_0: _elm_lang$html$Html$text('Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to.'),
 																				_1: {ctor: '[]'}
 																			}
+																		}
+																	}
+																}
+															}
+														}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$header,
+														{
+															ctor: '::',
+															_0: _user$project$Main$class(_user$project$MyStyles$header),
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('A Table of My Favorite Pirates'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_user$project$Style_Elements$table,
+															{
+																spacing: _user$project$Style$all(0)
+															},
+															{
+																ctor: '::',
+																_0: _user$project$Style_Elements$row(
+																	{
+																		ctor: '::',
+																		_0: _user$project$Style_Elements$tableHeader(
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html$text('Name'),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Style_Elements$tableHeader(
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Reason why favorite'),
+																					_1: {ctor: '[]'}
+																				}),
+																			_1: {ctor: '[]'}
 																		}
 																	}),
 																_1: {
 																	ctor: '::',
-																	_0: A2(
-																		_elm_lang$html$Html$header,
-																		{ctor: '[]'},
+																	_0: _user$project$Style_Elements$row(
 																		{
 																			ctor: '::',
-																			_0: _elm_lang$html$Html$text('And some animations'),
+																			_0: _user$project$Style_Elements$cell(
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$html$Html$text('Metalbeard'),
+																					_1: {ctor: '[]'}
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Style_Elements$cell(
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html$text('beard'),
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Style_Elements$row(
+																			{
+																				ctor: '::',
+																				_0: _user$project$Style_Elements$cell(
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$html$Html$text('Blackbeard'),
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Style_Elements$cell(
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html$text('beard'),
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {ctor: '[]'}
+																				}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Style_Elements$row(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Style_Elements$cell(
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html$text('Redbeard'),
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Style_Elements$cell(
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html$text('sense of humor'),
+																								_1: {ctor: '[]'}
+																							}),
+																						_1: {ctor: '[]'}
+																					}
+																				}),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_user$project$Style_Elements$centered,
+																{
+																	spacing: _user$project$Style$all(0)
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$button,
+																		{
+																			ctor: '::',
+																			_0: _user$project$Main$class(_user$project$MyStyles$button),
+																			_1: {
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$WeDontDoAnythingHere),
+																				_1: {ctor: '[]'}
+																			}
+																		},
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html$text('Make \'em walk the plank!'),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$hr,
+																	{
+																		ctor: '::',
+																		_0: _user$project$Main$class(_user$project$MyStyles$hr),
+																		_1: {ctor: '[]'}
+																	},
+																	{ctor: '[]'}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$header,
+																		{
+																			ctor: '::',
+																			_0: _user$project$Main$class(_user$project$MyStyles$header),
+																			_1: {ctor: '[]'}
+																		},
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$html$Html$text('Let\'s flow some boxes'),
 																			_1: {ctor: '[]'}
 																		}),
 																	_1: {
 																		ctor: '::',
 																		_0: A2(
-																			_elm_lang$html$Html$div,
+																			_user$project$Style_Elements$centered,
 																			{
-																				ctor: '::',
-																				_0: _user$project$Main$class(_user$project$Elements$centered),
-																				_1: {ctor: '[]'}
+																				spacing: _user$project$Style$all(10)
 																			},
 																			{
 																				ctor: '::',
@@ -15054,35 +15545,13 @@ var _user$project$Main$view = function (model) {
 																					_elm_lang$html$Html$div,
 																					{
 																						ctor: '::',
-																						_0: _user$project$Main$class(_user$project$Elements$base),
+																						_0: _user$project$Main$class(_user$project$MyStyles$smallBox),
 																						_1: {ctor: '[]'}
 																					},
 																					{
 																						ctor: '::',
-																						_0: A2(
-																							_elm_lang$html$Html$div,
-																							{
-																								ctor: '::',
-																								_0: _user$project$Main$class(_user$project$Elements$centered),
-																								_1: {ctor: '[]'}
-																							},
-																							{
-																								ctor: '::',
-																								_0: A2(
-																									_elm_lang$html$Html$div,
-																									{
-																										ctor: '::',
-																										_0: _user$project$Main$class(_user$project$Elements$rotatingBox),
-																										_1: {ctor: '[]'}
-																									},
-																									{ctor: '[]'}),
-																								_1: {ctor: '[]'}
-																							}),
-																						_1: {
-																							ctor: '::',
-																							_0: _elm_lang$html$Html$text('rotating'),
-																							_1: {ctor: '[]'}
-																						}
+																						_0: _elm_lang$html$Html$text('1'),
+																						_1: {ctor: '[]'}
 																					}),
 																				_1: {
 																					ctor: '::',
@@ -15090,72 +15559,48 @@ var _user$project$Main$view = function (model) {
 																						_elm_lang$html$Html$div,
 																						{
 																							ctor: '::',
-																							_0: _user$project$Main$class(_user$project$Elements$base),
+																							_0: _user$project$Main$class(_user$project$MyStyles$smallBox),
 																							_1: {ctor: '[]'}
 																						},
 																						{
 																							ctor: '::',
-																							_0: A2(
-																								_elm_lang$html$Html$div,
-																								{
-																									ctor: '::',
-																									_0: _user$project$Main$class(_user$project$Elements$centered),
-																									_1: {ctor: '[]'}
-																								},
-																								{
-																									ctor: '::',
-																									_0: A2(
-																										_elm_lang$html$Html$div,
-																										{
-																											ctor: '::',
-																											_0: _user$project$Main$class(_user$project$Elements$subtleLevitate),
-																											_1: {ctor: '[]'}
-																										},
-																										{ctor: '[]'}),
-																									_1: {ctor: '[]'}
-																								}),
-																							_1: {
-																								ctor: '::',
-																								_0: _elm_lang$html$Html$text('subtle levitation'),
-																								_1: {
-																									ctor: '::',
-																									_0: A2(
-																										_elm_lang$html$Html$br,
-																										{ctor: '[]'},
-																										{ctor: '[]'}),
-																									_1: {
-																										ctor: '::',
-																										_0: _elm_lang$html$Html$text('on hover'),
-																										_1: {ctor: '[]'}
-																									}
-																								}
-																							}
+																							_0: _elm_lang$html$Html$text('2'),
+																							_1: {ctor: '[]'}
 																						}),
-																					_1: {ctor: '[]'}
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_elm_lang$html$Html$div,
+																							{
+																								ctor: '::',
+																								_0: _user$project$Main$class(_user$project$MyStyles$smallBox),
+																								_1: {ctor: '[]'}
+																							},
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$html$Html$text('3'),
+																								_1: {ctor: '[]'}
+																							}),
+																						_1: {ctor: '[]'}
+																					}
 																				}
 																			}),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(
 																				_elm_lang$html$Html$header,
+																				{ctor: '[]'},
 																				{
 																					ctor: '::',
-																					_0: _user$project$Main$class(_user$project$Elements$header),
-																					_1: {ctor: '[]'}
-																				},
-																				{
-																					ctor: '::',
-																					_0: _elm_lang$html$Html$text('Perhaps a media query?'),
+																					_0: _elm_lang$html$Html$text('And some animations'),
 																					_1: {ctor: '[]'}
 																				}),
 																			_1: {
 																				ctor: '::',
 																				_0: A2(
-																					_elm_lang$html$Html$div,
+																					_user$project$Style_Elements$centered,
 																					{
-																						ctor: '::',
-																						_0: _user$project$Main$class(_user$project$Elements$centered),
-																						_1: {ctor: '[]'}
+																						spacing: _user$project$Style$all(10)
 																					},
 																					{
 																						ctor: '::',
@@ -15163,17 +15608,122 @@ var _user$project$Main$view = function (model) {
 																							_elm_lang$html$Html$div,
 																							{
 																								ctor: '::',
-																								_0: _user$project$Main$class(_user$project$Elements$mediaQueryExample),
+																								_0: _user$project$Main$class(_user$project$MyStyles$base),
 																								_1: {ctor: '[]'}
 																							},
 																							{
 																								ctor: '::',
-																								_0: _elm_lang$html$Html$text('resize the window to see this change!'),
+																								_0: A2(
+																									_user$project$Style_Elements$centered,
+																									{
+																										spacing: _user$project$Style$all(0)
+																									},
+																									{
+																										ctor: '::',
+																										_0: A2(
+																											_elm_lang$html$Html$div,
+																											{
+																												ctor: '::',
+																												_0: _user$project$Main$class(_user$project$MyStyles$rotatingBox),
+																												_1: {ctor: '[]'}
+																											},
+																											{ctor: '[]'}),
+																										_1: {ctor: '[]'}
+																									}),
+																								_1: {
+																									ctor: '::',
+																									_0: _elm_lang$html$Html$text('rotating'),
+																									_1: {ctor: '[]'}
+																								}
+																							}),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(
+																								_elm_lang$html$Html$div,
+																								{
+																									ctor: '::',
+																									_0: _user$project$Main$class(_user$project$MyStyles$base),
+																									_1: {ctor: '[]'}
+																								},
+																								{
+																									ctor: '::',
+																									_0: A2(
+																										_user$project$Style_Elements$centered,
+																										{
+																											spacing: _user$project$Style$all(0)
+																										},
+																										{
+																											ctor: '::',
+																											_0: A2(
+																												_elm_lang$html$Html$div,
+																												{
+																													ctor: '::',
+																													_0: _user$project$Main$class(_user$project$MyStyles$subtleLevitate),
+																													_1: {ctor: '[]'}
+																												},
+																												{ctor: '[]'}),
+																											_1: {ctor: '[]'}
+																										}),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$html$Html$text('subtle levitation'),
+																										_1: {
+																											ctor: '::',
+																											_0: A2(
+																												_elm_lang$html$Html$br,
+																												{ctor: '[]'},
+																												{ctor: '[]'}),
+																											_1: {
+																												ctor: '::',
+																												_0: _elm_lang$html$Html$text('on hover'),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}),
+																							_1: {ctor: '[]'}
+																						}
+																					}),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(
+																						_elm_lang$html$Html$header,
+																						{
+																							ctor: '::',
+																							_0: _user$project$Main$class(_user$project$MyStyles$header),
+																							_1: {ctor: '[]'}
+																						},
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$html$Html$text('Perhaps a media query?'),
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_user$project$Style_Elements$centered,
+																							{
+																								spacing: _user$project$Style$all(0)
+																							},
+																							{
+																								ctor: '::',
+																								_0: A2(
+																									_elm_lang$html$Html$div,
+																									{
+																										ctor: '::',
+																										_0: _user$project$Main$class(_user$project$MyStyles$mediaQueryExample),
+																										_1: {ctor: '[]'}
+																									},
+																									{
+																										ctor: '::',
+																										_0: _elm_lang$html$Html$text('resize the window to see this change!'),
+																										_1: {ctor: '[]'}
+																									}),
 																								_1: {ctor: '[]'}
 																							}),
 																						_1: {ctor: '[]'}
-																					}),
-																				_1: {ctor: '[]'}
+																					}
+																				}
 																			}
 																		}
 																	}

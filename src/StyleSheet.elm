@@ -2,8 +2,8 @@ module StyleSheet exposing (..)
 
 import Style exposing (..)
 import Style.Font
+import Style.Media
 import Html exposing (Html)
-import Html.Attributes
 import Color
 import Time exposing (Time, second)
 
@@ -42,8 +42,9 @@ type alias MyColorPalette =
     , button : Style.ColorPalette
     , navigation : Style.ColorPalette
     , navigationHover : Style.ColorPalette
-    , input : Style.ColorPalette
-    , inputFocused : Style.ColorPalette
+    , searchBar : Style.ColorPalette
+    , searchBarFocused : Style.ColorPalette
+    , greyBackground : Style.ColorPalette
     }
 
 
@@ -100,6 +101,11 @@ palette =
             , text = white
             , border = dark
             }
+        , greyBackground =
+            { background = lightCharcoal
+            , text = dark
+            , border = darker
+            }
         , navigation =
             { background = lightGrey
             , text = lightCharcoal
@@ -115,12 +121,12 @@ palette =
             , background = blue
             , text = white
             }
-        , input =
+        , searchBar =
             { background = Color.grey
             , text = Color.charcoal
             , border = Color.lightGrey
             }
-        , inputFocused =
+        , searchBarFocused =
             { background = Color.white
             , text = Color.lightCharcoal
             , border = Color.lightGrey
@@ -134,29 +140,42 @@ palette =
 --------------------
 
 
-base : Style.Simple
+base : Style.Model Class
 base =
-    Style.empty
+    Style.foundation
         |> colors palette.normal
         |> font fontPalette.body.normal
+        |> transition
+            { property = "all"
+            , duration = 300
+            , easing = "ease-out"
+            , delay = 0
+            }
 
 
+type Class
+    = Nav
+    | Centered
+    | Container
+    | Article
+    | Sidebar
+    | P
+    | Link
+    | Navlink
+    | Header
+    | Box
+    | Smallbox
 
---------------------
--- Define Elements
---------------------
 
-
-nav : Element String msg
-nav =
-    Style.element
-        (base
+stylesheet : Style.StyleSheet Class msg
+stylesheet =
+    Style.debugWith [ Style.autoImportGoogleFonts ]
+        [ classWith Nav base
             |> colors palette.navigation
             |> width (percent 100)
             |> padding (leftRightAndTopBottom 30 15)
-            |> relativeTo screen
-            |> anchor topLeft
-            |> position ( 0, 0 )
+            |> positionBy screen
+            |> topLeft 0 0
             |> zIndex 10
             |> minWidth (px 1000)
             |> flowRight
@@ -167,75 +186,37 @@ nav =
                     -- Perfect for a nav with a right and left section
                 , vertical = verticalCenter
                 }
-        )
-
-
-centered : Element String msg
-centered =
-    Style.element
-        (base
+        , classWith Centered base
             |> spacing (all 10)
+            |> property "text-align" "center"
             |> flowRight
                 { wrap = True
                 , horizontal = alignCenter
                 , vertical = alignTop
                 }
-        )
-
-
-container : Element String msg
-container =
-    Style.element
-        (base
+        , classWith Container base
             |> padding (topBottom 100)
-            |> properties [ ( "min-width", "1000px" ) ]
+            |> minWidth (px 1000)
             |> flowLeft
                 { wrap = True
                 , horizontal = alignCenter
                 , vertical = alignTop
                 }
-        )
-
-
-article : Element String msg
-article =
-    Style.elementAs "article"
-        (base
+        , classWith Article base
             |> width (px 700)
             |> padding (all 20)
             |> spacing (all 40)
-        )
-
-
-sidebar : Element String msg
-sidebar =
-    Style.element
-        (base
+        , classWith Sidebar base
             |> width (px 300)
             |> padding (all 20)
             |> spacing (topBottom 40)
-        )
-
-
-p : Element String msg
-p =
-    elementAs "p" (base |> spacing (all 20))
-
-
-link : Element String msg
-link =
-    elementAs "a"
-        (base
-            |> inline
+        , classWith P base
+            |> spacing (all 20)
+        , classWith Link base
             |> colors palette.link
-        )
-
-
-navLink : Element String msg
-navLink =
-    elementAs "a"
-        (base
-            |> inline
+            |> underline
+            |> cursor "pointer"
+        , classWith Navlink base
             |> padding (left 20)
             |> colors palette.navigation
             |> hover
@@ -244,35 +225,19 @@ navLink =
                         |> colors palette.navigationHover
                         |> cursor "pointer"
                 )
-        )
-
-
-header : Element String msg
-header =
-    elementAs "header"
-        (base
+        , classWith Header base
             |> font fontPalette.body.huge
-        )
-
-
-box : Style.Simple
-box =
-    base
-        |> width (px 180)
-        |> height (px 180)
-        |> padding (all 20)
-        |> colors palette.blue
-        |> flowRight
-            { wrap = True
-            , horizontal = alignCenter
-            , vertical = verticalCenter
-            }
-
-
-smallBox : Element String msg
-smallBox =
-    Style.element
-        (base
+        , classWith Box base
+            |> width (px 180)
+            |> height (px 180)
+            |> padding (all 20)
+            |> colors palette.blue
+            |> flowRight
+                { wrap = True
+                , horizontal = alignCenter
+                , vertical = verticalCenter
+                }
+        , classWith Smallbox base
             |> width (px 120)
             |> height (px 120)
             |> padding (all 20)
@@ -282,40 +247,43 @@ smallBox =
                 , horizontal = alignCenter
                 , vertical = verticalCenter
                 }
-        )
+        ]
 
 
-red : Style.Simple -> Style.Simple
+red : Style.Model -> Style.Model
 red model =
     model
         |> colors palette.red
 
 
-bordered : Style.Simple -> Style.Simple
+bordered : Style.Model -> Style.Model
 bordered model =
     model
         |> borderWidth (all 5)
         |> borderRadius (all 15)
 
 
-input : Element String msg
-input =
-    Style.elementAs "input"
-        (base
-            |> width (px 250)
-            |> padding (leftRightAndTopBottom 10 5)
-            |> colors palette.input
-            |> borderWidth (all 1)
-            |> borderStyle solid
-            |> borderRadius (all 3)
-            |> focus
-                (colors
-                    { background = Color.white
-                    , text = Color.lightCharcoal
-                    , border = Color.lightGrey
-                    }
-                )
-        )
+searchBar : Style.Model
+searchBar =
+    base
+        |> width (px 250)
+        |> padding (leftRightAndTopBottom 10 5)
+        |> colors palette.searchBar
+        |> borderWidth (all 1)
+        |> borderStyle solid
+        |> borderRadius (all 3)
+        |> focus
+            (colors
+                { background = Color.white
+                , text = Color.lightCharcoal
+                , border = Color.lightGrey
+                }
+            )
+
+
+br : Html msg
+br =
+    Html.br [] []
 
 
 
@@ -324,20 +292,20 @@ input =
 -------------------
 
 
-table : Style.Simple
+table : Style.Model
 table =
     Style.empty
         |> tableLayout
 
 
 {-| -}
-row : Style.Simple
+row : Style.Model
 row =
     Style.empty
 
 
 {-| -}
-tableHeader : Style.Simple
+tableHeader : Style.Model
 tableHeader =
     Style.empty
         |> padding (all 10)
@@ -347,7 +315,7 @@ tableHeader =
 
 
 {-| -}
-cell : Style.Simple
+cell : Style.Model
 cell =
     Style.empty
         |> padding (all 10)
@@ -356,80 +324,72 @@ cell =
         |> borderRadius (all 0)
 
 
-button : Element String msg
+button : Style.Model
 button =
-    Style.elementAs "button"
-        (base
-            |> padding (leftRightAndTopBottom 30 15)
-            |> borderStyle solid
-            |> borderWidth (all 0)
-            |> borderRadius (all 2)
-            |> colors palette.button
-            |> shadows
-                [ shadow
-                    { offset = ( 0, 2 )
-                    , blur = 5
-                    , size = 0
-                    , color = Color.rgba 0 0 0 0.26
-                    }
-                ]
-            |> hover
-                (levitate
-                    >> cursor "pointer"
-                )
-        )
-
-
-rotatingBox : Element String msg
-rotatingBox =
-    Style.element
-        (base
-            |> colors palette.button
-            |> width (px 50)
-            |> height (px 50)
-            |> Style.animate
-                { duration = (5 * second)
-                , easing = "linear"
-                , repeat = forever
-                , steps =
-                    [ ( 0, transforms [ rotate 0 0 0 ] )
-                    , ( 100, transforms [ rotate 0 0 (2 * pi) ] )
-                    ]
+    base
+        |> padding (leftRightAndTopBottom 30 15)
+        |> borderStyle solid
+        |> borderWidth (all 0)
+        |> borderRadius (all 2)
+        |> colors palette.button
+        |> shadows
+            [ shadow
+                { offset = ( 0, 2 )
+                , blur = 5
+                , size = 0
+                , color = Color.rgba 0 0 0 0.26
                 }
-        )
+            ]
+        |> hover
+            (levitate >> cursor "pointer")
 
 
-subtleLevitate : Element String msg
-subtleLevitate =
-    Style.element
-        (base
-            |> colors palette.button
-            |> width (px 50)
-            |> height (px 50)
-            |> shadows
-                [ shadow
-                    { offset = ( 0, 2 )
-                    , blur = 5
-                    , size = 0
-                    , color = Color.rgba 0 0 0 0.26
-                    }
+rotatingBox : Style.Model
+rotatingBox =
+    base
+        |> colors palette.button
+        |> width (px 50)
+        |> height (px 50)
+        |> animate
+            { duration = (5 * second)
+            , easing = "linear"
+            , repeat = forever
+            , steps =
+                [ ( 0, transforms [ rotate 0 0 0 ] )
+                , ( 100, transforms [ rotate 0 0 (2 * pi) ] )
                 ]
-            |> hover levitate
-        )
+            }
+
+
+subtleLevitate : Style.Model
+subtleLevitate =
+    base
+        |> colors palette.button
+        |> width (px 50)
+        |> height (px 50)
+        |> shadows
+            [ shadow
+                { offset = ( 0, 2 )
+                , blur = 5
+                , size = 0
+                , color = Color.rgba 0 0 0 0.26
+                }
+            ]
+        |> hover levitate
 
 
 {-| To make the styles for the media queries we provide a function that takes the parent style and make the new style.
 
 -}
-mediaQueryExample : Style.Simple
+mediaQueryExample : Style.Model
 mediaQueryExample =
     let
-        paintRed : Style.Simple -> Style.Simple
+        paintRed : Style.Model -> Style.Model
         paintRed model =
             model
                 |> colors palette.red
 
-        makeBordered : Style.Simple -> Style.Simple
+        makeBordered : Style.Model -> Style.Model
         makeBordered model =
             model
                 |> borderWidth (all 5)
@@ -446,8 +406,8 @@ mediaQueryExample =
                 , vertical = verticalCenter
                 }
             |> media
-                [ mediaQuery "screen and ( max-width: 700px )" paintRed
-                , mediaQuery "screen and ( max-width: 600px )" makeBordered
+                [ Style.Media.phoneOnly paintRed
+                , Style.Media.tabletPortraitOnly makeBordered
                 ]
 
 
@@ -463,37 +423,47 @@ mediaQueryExample =
 ---------------
 
 
-hr : Element String msg
+hr : Style.Model
 hr =
-    elementAs "hr"
-        (base
-            |> height (px 1)
-            |> width (percent 100)
-        )
+    base
+        |> height (px 1)
+        |> width (percent 100)
+        |> colors palette.greyBackground
+        |> inline
+
+
+{-| Italicize text
+-}
+em : Style.Model
+em =
+    base
+        |> inline
+        |> italicize
+
+
+{-| Bold text
+-}
+strong : Style.Model
+strong =
+    base
+        |> inline
+        |> bold
+
+
+{-| Strike-through text
+-}
+strikeThrough : Style.Model
+strikeThrough =
+    base
+        |> inline
+        |> strike
 
 
 
---{-| Italicize text
----}
---em : Style.Simple
---em =
---    italicize <| inline base
---{-| Bold text
----}
---strong : Style.Simple
---strong =
---    base
---        |> inline
---        |> bold
---{-| Strike-through text
----}
---strikeThrough : Style.Simple
---strikeThrough =
---    strike <| inline base
 -- Animations
 
 
-levitate : Style.Simple -> Style.Simple
+levitate : Style.Model -> Style.Model
 levitate model =
     model
         |> shadows
