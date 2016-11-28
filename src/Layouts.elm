@@ -8,80 +8,19 @@ You can use these directly in your view function.
 
 -}
 
-import Style
+import Style exposing (..)
 import Html exposing (Html)
 import Html.Attributes
-import Style.Render
-import Style.Model exposing (VerticalAlignment, Alignment)
 
 
-stylesheet : Style.StyleSheet msg
-stylesheet =
-    Style.render
-        [ centeredStyle
-        , completelyCenteredStyle
-        , splitStyle
-        , floatLeftStyle
-        , floatRightStyle
-        , floatTopLeftStyle
-        , floatTopRightStyle
-        ]
-
-
-{-| -}
-centered : List (Html msg) -> Html msg
-centered spacing nodes =
-    Html.div
-        [ stylesheet.class centeredStyle ]
-        nodes
-
-
-{-| -}
-completelyCentered : List (Html msg) -> Html msg
-completelyCentered spacing nodes =
-    Html.div
-        [ stylesheet.class completelyCenteredStyle ]
-        nodes
-
-
-{-| -}
-split : List (Html msg) -> Html msg
-split spacing nodes =
-    Html.div
-        [ stylesheet.class split ]
-        nodes
-
-
-{-| -}
-floatRight : List (Html msg) -> Html msg
-floatRight nodes =
-    Html.div
-        [ stylesheet.class floatRightStyle ]
-        nodes
-
-
-{-| -}
-floatLeft : List (Html msg) -> Html msg
-floatLeft nodes =
-    Html.div
-        [ stylesheet.class floatLeftStyle ]
-        nodes
-
-
-{-| -}
-floatTopLeft : List (Html msg) -> Html msg
-floatTopLeft nodes =
-    Html.div
-        [ stylesheet.class floatTopLeftStyle ]
-        nodes
-
-
-{-| -}
-floatTopRight : List (Html msg) -> Html msg
-floatTopRight nodes =
-    Html.div
-        [ stylesheet.class floatTopRightStyle ]
-        nodes
+type Class
+    = Centered
+    | CompletelyCentered
+    | Split
+    | FloatLeft
+    | FloatRight
+    | FloatTopLeft
+    | FloatTopRight
 
 
 
@@ -90,61 +29,98 @@ floatTopRight nodes =
 ---------------
 
 
-centeredStyle : Style.Model
-centeredStyle =
-    Style.empty
-        |> Style.spacing (all 10)
-        |> Style.flowRight
-            { wrap = True
-            , horizontal = Style.alignCenter
-            , vertical = Style.alignTop
-            }
+stylesheet : Style.StyleSheet Class msg
+stylesheet =
+    Style.render
+        [ class Centered
+            [ Style.spacing (all 10)
+            , Style.flowRight
+                { wrap = True
+                , horizontal = Style.alignCenter
+                , vertical = Style.alignTop
+                }
+            ]
+        , class CompletelyCentered
+            [ Style.spacing (all 10)
+            , Style.flowRight
+                { wrap = True
+                , horizontal = Style.alignCenter
+                , vertical = Style.verticalCenter
+                }
+            ]
+        , class Split
+            [ Style.spacing (all 10)
+            , Style.flowRight
+                { wrap = False
+                , horizontal =
+                    Style.justify
+                    -- this makes it so the children elements hug the sides.
+                    -- Perfect for a nav with a right and left section
+                , vertical = Style.verticalCenter
+                }
+            ]
+        , class FloatLeft
+            [ Style.floatLeft ]
+        , class FloatRight
+            [ Style.floatRight ]
+        , class FloatTopLeft
+            [ Style.floatTopLeft ]
+        , class FloatTopRight
+            [ Style.floatTopRight ]
+        ]
 
 
-completelyCenteredStyle : Style.Model
-completelyCenteredStyle =
-    Style.empty
-        |> Style.spacing (all 10)
-        |> Style.flowRight
-            { wrap = True
-            , horizontal = Style.alignCenter
-            , vertical = Style.verticalCenter
-            }
+{-| -}
+centered : List (Html msg) -> Html msg
+centered nodes =
+    Html.div
+        [ stylesheet.class Centered ]
+        nodes
 
 
-splitStyle : Style.Model
-splitStyle =
-    Style.empty
-        |> Style.spacing (all 10)
-        |> Style.flowRight
-            { wrap = False
-            , horizontal =
-                Style.justify
-                -- this makes it so the children elements hug the sides.
-                -- Perfect for a nav with a right and left section
-            , vertical = Style.verticalCenter
-            }
+{-| -}
+completelyCentered : List (Html msg) -> Html msg
+completelyCentered nodes =
+    Html.div
+        [ stylesheet.class CompletelyCentered ]
+        nodes
 
 
-floatLeftStyle : Style.Model
-floatLeftStyle =
-    Style.empty
-        |> Style.floatLeft
+{-| -}
+split : List (Html msg) -> Html msg
+split nodes =
+    Html.div
+        [ stylesheet.class Split ]
+        nodes
 
 
-floatRightStyle : Style.Model
-floatRightStyle =
-    Style.empty
-        |> Style.floatRight
+{-| -}
+floatRight : List (Html msg) -> Html msg
+floatRight nodes =
+    Html.div
+        [ stylesheet.class FloatRight ]
+        nodes
 
 
-floatTopLeftStyle : Style.Model
-floatTopLeftStyle =
-    Style.empty
-        |> Style.floatTopLeft
+{-| -}
+floatLeft : List (Html msg) -> Html msg
+floatLeft nodes =
+    Html.div
+        [ stylesheet.class FloatLeft ]
+        nodes
 
 
-floatTopRightStyle : Style.Model
-floatTopRightStyle =
-    Style.empty
-        |> Style.floatTopRight
+{-| -}
+floatTopLeft : List (Html msg) -> Html msg
+floatTopLeft nodes =
+    Html.div
+        [ stylesheet.class FloatTopLeft ]
+        nodes
+
+
+{-| -}
+floatTopRight : List (Html msg) -> Html msg
+floatTopRight nodes =
+    Html.div
+        [ stylesheet.class FloatTopRight ]
+        nodes

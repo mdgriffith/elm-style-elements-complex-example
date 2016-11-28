@@ -1,11 +1,9 @@
 # A "Real World" example for using Style Elements in elm
 
-Styles are created in __Elements.elm__ and turned into elements which can are used to compose the `view` in `Main.elm`
+This is an example of the [style-elements](https://github.com/mdgriffith/style-elements) library.
 
-There are examples of
+It shows the following
 
- * handling layout
- * animations and transitions
+ * handling layout by creating layout elements (`Layout.elm`)
+ * animations
  * media queries
- * optional style variations
- * creating color and font palettes

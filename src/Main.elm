@@ -6,8 +6,7 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onSubmit)
-import MyStyles
-import Layouts
+import StyleSheet exposing (Class(..))
 import Layouts
 import Style exposing (all)
 
@@ -42,71 +41,69 @@ update msg model =
 
 
 { class, classList } =
-    MyStyles.stylesheet
+    StyleSheet.stylesheet
 
 
 view : Model -> Html Msg
 view model =
     div
         []
-        [ Style.embed
-            [ MyStyles.stylesheet
-            , Layouts.stylesheet
-            ]
-        , nav [ class MyStyles.nav ]
+        [ Style.embed StyleSheet.stylesheet
+        , Style.embed Layouts.stylesheet
+        , nav [ class Nav ]
             [ div []
                 [ a
-                    [ class MyStyles.navLink
+                    [ class NavLink
                     , onClick WeDontDoAnythingHere
                     ]
                     [ text "All Things Pirate" ]
                 ]
             , input
-                [ class MyStyles.searchBar
+                [ class SearchBar
                 , placeholder "Pirate Search"
                 , onSubmit WeDontDoAnythingHere
                 ]
                 []
             , Layouts.centered
                 [ a
-                    [ class MyStyles.navLink
+                    [ class NavLink
                     , onClick WeDontDoAnythingHere
                     ]
                     [ text "Settings" ]
                 , a
-                    [ class MyStyles.navLink
+                    [ class NavLink
                     , onClick WeDontDoAnythingHere
                     ]
                     [ text "Logged in as Smee" ]
                 ]
             ]
-        , div [ class MyStyles.container ]
-            [ div [ class MyStyles.sidebar ]
-                [ header [ class MyStyles.header ] [ text "Sidebar" ]
+        , div [ class Container ]
+            [ div [ class Sidebar ]
+                [ header [ class Header ] [ text "Sidebar" ]
                 , text "Yar, this website does nothin, except to show what pirate's care about most "
-                , s [ class MyStyles.strikeThrough ] [ text "which be booty" ]
+                , s [ class StrikeThrough ] [ text "which be booty" ]
                 , text " which be CSS and elm"
                 ]
-            , article [ class MyStyles.article ]
-                [ header [ class MyStyles.header ] [ text "Yar" ]
+            , article [ class Article ]
+                [ header [ class Header ] [ text "Yar" ]
                 , p
-                    [ class MyStyles.p ]
+                    [ class P ]
                     [ text "Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. "
                     , strong [] [ text "Pinnace holystone mizzenmast" ]
                     , text " quarter crow's nest nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey "
                     , em [] [ text "doubloon starboard grog black jack gangway rutters." ]
                     ]
                 , p
-                    [ class MyStyles.p ]
+                    [ class P ]
                     [ Layouts.floatTopLeft
                         [ div
-                            [ class MyStyles.box ]
+                            [ class Box ]
                             [ text "We be afloat on the port side!" ]
                         ]
                     , text "Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to."
                     , Layouts.floatRight
                         [ div
-                            [ class MyStyles.box ]
+                            [ class Box ]
                             [ text "We be a-starboard now!" ]
                         ]
                     , text "Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. "
@@ -116,40 +113,40 @@ view model =
                     ]
                 , Layouts.centered
                     [ button
-                        [ class MyStyles.button
+                        [ class Button
                         , onClick WeDontDoAnythingHere
                         ]
                         [ text "Make 'em walk the plank!" ]
                     ]
-                , hr [ class MyStyles.hr ] []
+                , hr [] []
                 , header
-                    [ class MyStyles.header ]
+                    [ class Header ]
                     [ text "Let's flow some boxes" ]
                 , Layouts.centered
-                    [ div [ class MyStyles.smallBox ] [ text "1" ]
-                    , div [ class MyStyles.smallBox ] [ text "2" ]
-                    , div [ class MyStyles.smallBox ] [ text "3" ]
+                    [ div [ class SmallBox ] [ text "1" ]
+                    , div [ class SmallBox ] [ text "2" ]
+                    , div [ class SmallBox ] [ text "3" ]
                     ]
                 , header [] [ text "And some animations" ]
                 , Layouts.centered
-                    [ div [ class MyStyles.base ]
+                    [ div [ class Base ]
                         [ Layouts.centered
-                            [ div [ class MyStyles.rotatingBox ] [] ]
+                            [ div [ class RotatingBox ] [] ]
                         , text "rotating"
                         ]
-                    , div [ class MyStyles.base ]
+                    , div [ class Base ]
                         [ Layouts.centered
-                            [ div [ class MyStyles.subtleLevitate ] []
+                            [ div [ class SubtleLevitate ] []
                             ]
                         , text "subtle levitation"
                         , br [] []
                         , text "on hover"
                         ]
                     ]
-                , header [ class MyStyles.header ] [ text "Perhaps a media query?" ]
+                , header [ class Header ] [ text "Perhaps a media query?" ]
                 , Layouts.centered
                     [ div
-                        [ class MyStyles.mediaQueryExample ]
+                        [ class MediaQueryExample ]
                         [ text "resize the window to see this change!" ]
                     ]
                 ]
